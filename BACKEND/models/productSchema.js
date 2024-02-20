@@ -14,7 +14,8 @@ const productschema = new mongoose.Schema({
      OperatingSystem:String,
      ScreenSize:String,
      BatteryBackup:String,
-     quantity:String
+     quantity:String,
+
     
 
 

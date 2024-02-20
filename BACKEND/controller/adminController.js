@@ -90,6 +90,8 @@ module.exports={
             BatteryBackup,
             quantity
 
+                 
+
           } = req.body ;
               //  console.log(req.body);
           const data = await productSchema.create ({
@@ -105,6 +107,8 @@ module.exports={
             ScreenSize,
             BatteryBackup,
             quantity
+
+        
 
             
          }); 

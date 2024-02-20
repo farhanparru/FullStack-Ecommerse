@@ -10,10 +10,11 @@ router.use(express.json())
 
 router
 .post("/login",tryCatchMiddleware(admin.login))
+.use(verifyToken)
 
 // apk middleware  start
 
-.use(verifyToken)
+
 
 // apk middleware  end
 

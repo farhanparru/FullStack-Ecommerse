@@ -9,17 +9,18 @@ const verifyToken = require("../middlewares/userAuthMiddleware")
 router
 .post("/signup",tryCatchMiddleware(userController.userSignup))
 .post("/login",tryCatchMiddleware(userController.userLogin))
+.get("/allProducts",tryCatchMiddleware(userController.allProducts))
 
 .get("/products",tryCatchMiddleware(userController.viewProduct))
-
 .get("/products/:id",tryCatchMiddleware(userController.productById))
-.use(verifyToken)
+// .use(verifyToken) 
 
 .get("/products/category:categoryname",tryCatchMiddleware(userController.productsByCatogery))
 .post("/:id/cart",tryCatchMiddleware(userController.addToCart))
 .get("/:id/cart",tryCatchMiddleware(userController.viewCartProduct))
 .put("/:id/cart",tryCatchMiddleware(userController.updateCartItemQuantity))
-.delete("/:id/cart/:itemId",tryCatchMiddleware(userController.removeCartProduct))
+
+.delete("/:id/cart",tryCatchMiddleware(userController.removeCartProduct))
 
 
 

@@ -42,7 +42,7 @@ const Login = () => {
       const payload = {email,password};
       const response = await axios.post(url,payload);
 
-      console.log(response,"h");
+      // console.log(response,"h");
 
       if(response.status === 200){
         email !== Adminemail && localStorage.setItem("userId",response.data.userId);
@@ -59,6 +59,7 @@ const Login = () => {
             localStorage.removeItem("userId")
             localStorage.removeItem("email")
           },3600000)
+        
           Navigate("/")
           toast.success("Login Successful");
         }

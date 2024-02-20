@@ -108,9 +108,28 @@ module.exports ={
                   })
            },
 
+       //->AllProducts
+
+
+       allProducts:async(req,res)=>{
+         const products = await  product.find()
+         if(!products){
+            res.status(404).send({status:"error",message:"product note found"})
+         }
+
+         res.status(200).send({
+           status:"Success",
+           message:"Success fully fetched data",
+           data:products,
+         })
+       },
+
+
+ 
+
+
            //->view product by category
-           viewProduct:
-           async(req,res)=>{
+            viewProduct:async(req,res)=>{
               const products =  await product.find()
               if(!products){
                  res.status(404).send({status:"error",message:"product note found"})
@@ -227,23 +246,23 @@ module.exports ={
                  updateCartItemQuantity:async(req,res)=>{
                     const userId = req.params.id;
                     const{id,quantityChange}=req.body;
+                    // console.log(id,"iiii")
                   
-                      console.log(req.body,"llll");
 
                     const user = await User.findById(userId)
-                    console.log(user,"yyyyy");
                     if(!user){return res.status(404).json({message:"User note found"})}
+                    console.log(user,"yyy");
 
-                    // const cartItem = user.cart.id(id);
-                    const cartItem = user.cart.find(item => item._id.toString() === id);
-
-                    console.log(cartItem,"ooo");
+                    const cartItem = user.User.id(id)
+                                
+                    console.log(cart.id,"ooo ")
+             
                     if(!cartItem){return res.status(404).json({message:"Cart item note found"})}
 
-                    cartItem. quantity =+ quantityChange;
+                    cartItem.quantity += quantityChange;
                
 
-                    if(cartItem. quantity>0){
+                    if(cartItem.quantity>1){
                        await user.save();
                     }
 
@@ -257,34 +276,57 @@ module.exports ={
 
 
               //-> removeCartProduct
+               removeCartProduct:async(req,res)=>{
+                  const userId = req.params.id;
+                  const productId = req.body.productId;
 
-              removeCartProduct: async(req,res)=>{
-                 const userId = req.params.id
-                 const itemId =req.params.itemId 
+                  console.log(productId,"kkkk");
+                     
+                  await  User.updateOne({_d:userId},{$pull:{cart:productId}})
+                  res.status(201).json({
+                     status:"Success",
+                     message:"product removed from the cart"
+                  })
+               },
+
+ 
+
+           
+
+
+
+              // removeCartProduct: async(req,res)=>{
+              //    const userId = req.params.id
+                
+              //    const itemId =req.params.itemId 
+              //    console.log(itemId,"eeee");
                  
-                 if(!itemId){
-                   return res.status(404).json({message:"Product not found"})
-                 }
-                 const user = await User.findById(userId)
-                //  console.log(user,"ttt");
+              //    if(!itemId){
+              //      return res.status(404).json({message:"Product not found"})
+              //    }
+              //    const user = await User.findById(userId)
+              //   //  console.log(user,"ttt");
 
-                 if(!user){
-                   res.status(404).json({message:"User Note found"})
-                 }
+              //    if(!user){
+              //      res.status(404).json({message:"User Note found"})
+              //    }
 
-                 const result = await User.updateOne(
-                   {_id:userId},
-                   {$pull:{cart:{cart:itemId}}}
-                 );
+              //    const result = await User.updateOne(
+                  
+              //      {_id:userId},
+              //      {$pull:{cart:{cart:itemId}}}
+              //    );
+               
+              //   //  console.log(result,"PP");
 
-                 if(result.modifiedCount > 0){
-                   console.log('item removed successfully');
-                   res.status(200).json({message:"Product removed successfully",data,result})
-                 }else{
-                   console.log('Item not found in the cart');
-                 }
+              //    if(result.modifiedCount > 0){
+              //      console.log('item removed successfully');
+              //      res.status(200).json({message:"Product removed successfully",data,result})
+              //    }else{
+              //      console.log('Item not found in the cart');
+              //    }
 
-              },
+              // },
 
 
 

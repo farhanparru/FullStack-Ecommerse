@@ -22,6 +22,7 @@
   import AddProduct from './AdminSide/AddProduct';
   import Payment from './ProductSection/payment';
 import User from './AdminSide/User';
+import Allproduct from './ProductSection/Allproduct';
 
   // console.log( process.env.REACT_APP_API_URL,"hai");
 
@@ -74,6 +75,7 @@ import User from './AdminSide/User';
           <Route path='/Addproduct' element={<AddProduct/>}/>
           <Route path='/payment' element={<Payment/>}/>
           <Route path='/user' element={<User/>}/>
+          <Route path='/allProducts' element={<Allproduct/>}/>
         </Routes>
         {
         ijdsk&&

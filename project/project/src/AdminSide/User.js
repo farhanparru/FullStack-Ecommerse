@@ -2,21 +2,34 @@ import React, { useEffect, useState } from 'react'
 import { Axios } from '../App'
 
 
+
+
 const User = () => {
-const [products,setProducts]=useState([])
+const [users,setUsers]=useState([])
+
 useEffect(()=>{
 
-    const fetchProducts = async()=>{
-        const response=await Axios.get("api/admin/users")
+  async function fetchUsers(){
+     try{
+       const jwtToken ={
+         headers:{
+          Authorization:`${localStorage.getItem("jwt")}`
+         }
+       }
+       console.log(jwtToken,"iiii");
+       const response = await Axios.get(
+        "http://localhost:3000/api/admin/users",jwtToken
+        )
+        console.log(response,"kkkk");
 
-        console.log(response,"oo");
-
-        if(response.status ===200){
-            setProducts(response.data.data)
+        if(response.status === 200){
+           setUsers(response.data.data)
         }
-      }
-
-      fetchProducts()
+     }catch (error){
+       console.log('Error fetching users:',error);
+     }
+  }
+  fetchUsers()
 },[])
 
 
@@ -24,7 +37,7 @@ useEffect(()=>{
 
   return (
     <div className="overflow-x-auto">
-    {products.map((item)=>(
+    {users.map((item)=>(
         <table className="table">
         <thead>
           <tr key={item.useId}>

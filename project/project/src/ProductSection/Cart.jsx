@@ -43,7 +43,7 @@ const Cart = () => {
           
           try{
              await Axios.put(`/api/users/${id}/cart`,data)
-             const response = await axios.get(`/api/users/${id}/cart`)
+             const response = await Axios.get(`/api/users/${id}/cart`)
 
              console.log(response,"kkk");
              
@@ -84,29 +84,24 @@ const Cart = () => {
                 <p className="mt-2 text-gray-600">Price:${item. price}</p>
                 <p className="mt-2 text-gray-600">OldPrice:${item.OldPrice}</p>
                 <div className="mt-4 flex items-center">
-                  <span className="mr-2 text-gray-600">Quantity:0</span>
+                  <span className="mr-2 text-gray-600">Quantity:</span>
 
+ 
 
+            <div className="flex items-center">
+            <button 
+         className="bg-gray-200 text-gray-700 rounded-l-lg px-3 py-1 hover:bg-gray-300 bg-primary"
+         onClick={() => handleQuantity(item._id, -1)} >
+         <i className="fas fa-minus"></i>
+       </button>
 
-                  <div className="flex items-center">
-           <button 
-        className="bg-gray-200 text-gray-700 rounded-l-lg px-3 py-1 hover:bg-gray-300 bg-primary"
-        disabled
-        onClick={() => handleQuantity(item._id, -1)}
-    >
-        <i className="fas fa-minus"></i>
-      </button>
+      <span className="mx-2 text-gray-600">{item.quantity}</span>
 
-    <span className="mx-2 text-gray-600">{item.quantity}</span>
-
-      <button 
-        className="bg-gray-200 text-gray-700 rounded-r-lg px-3 py-1 hover:bg-gray-300 bg-dark"
-        onClick={() => handleQuantity(item._id,1)}
-         >
+       <button   className="bg-gray-200 text-gray-700 rounded-r-lg px-3 py-1 hover:bg-gray-300 bg-dark"
+       onClick={() => handleQuantity(item._id,1)} >
         <i className="fas fa-plus"></i>
-    </button>
-
-</div>
+      </button>
+      </div>
 
 
                   </div>

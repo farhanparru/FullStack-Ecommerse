@@ -71,6 +71,8 @@ console.log(filteredProducts)
             <Link to="/ "><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg'>home</button></Link>
            <Link to="/laptop"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg'>Laptops</button></Link> 
            <Link to="/Phone"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg'>smart phone</button></Link> 
+
+           <Link to="/allProducts"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg'>AllProduct</button></Link>
  
         </div>
        

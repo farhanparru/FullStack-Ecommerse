@@ -17,7 +17,7 @@ const [product, setProduct]=useState([])
 const userId =localStorage.getItem("userId")
 const { id } = useParams()
 
-console.log(userId,"hjai");
+// console.log(userId,"hjai");
 
 useEffect(()=>{
   const fechProduct = async ()=>{
