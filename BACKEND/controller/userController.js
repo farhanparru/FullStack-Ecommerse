@@ -243,51 +243,47 @@ module.exports ={
 
                  //-> updateCartItemQuantity
 
-                 updateCartItemQuantity:async(req,res)=>{
-                    const userId = req.params.id;
-                    const{id,quantityChange}=req.body;
-                    // console.log(id,"iiii")
-                  
-
-                    const user = await User.findById(userId)
-                    if(!user){return res.status(404).json({message:"User note found"})}
-                    console.log(user,"yyy");
-
-                    const cartItem = user.User.id(id)
-                                
-                    console.log(cart.id,"ooo ")
-             
-                    if(!cartItem){return res.status(404).json({message:"Cart item note found"})}
-
-                    cartItem.quantity += quantityChange;
-               
-
-                    if(cartItem.quantity>1){
-                       await user.save();
-                    }
-
-                    res.status(200).json({
-                       status:"Successs",
-                       message:'Cart item quantity  update',
-                       data:user.cart
-                    })
-                 },
-                 
-
-
-              //-> removeCartProduct
-               removeCartProduct:async(req,res)=>{
+                 updateCartItemQuantity: async (req, res) => {
                   const userId = req.params.id;
-                  const productId = req.body.productId;
-
-                  console.log(productId,"kkkk");
-                     
-                  await  User.updateOne({_d:userId},{$pull:{cart:productId}})
-                  res.status(201).json({
-                     status:"Success",
-                     message:"product removed from the cart"
-                  })
-               },
+                  const { id, quantityChange } = req.body;
+              
+                  try {
+                      // Find the user
+                      const user = await User.findById(userId);
+                      if (!user) {
+                          return res.status(404).json({ message: "User not found" });
+                      }
+              
+                      // Find the cart item in the user's cart
+                      const cartItem = user.cart.find(item => item._id.toString() === id);
+                      console.log(cartItem,"ttt");
+                      if (!cartItem) {
+                          return res.status(404).json({ message: "Cart item not found" });
+                      }
+              
+                      // Update the quantity of the cart item
+                      cartItem.quantity += quantityChange;
+              
+                      // Ensure quantity doesn't go below 1
+                      if (cartItem.quantity < 1) {
+                          cartItem.quantity = 1;
+                      }
+              
+                      // Save the user
+                      await user.save();
+              
+                      res.status(200).json({
+                          status: "Success",
+                          message: 'Cart item quantity updated',
+                          data: user.cart
+                      });
+                  } catch (error) {
+                      console.error(error);
+                      res.status(500).json({ message: "Internal Server Error" });
+                  }
+              },
+              
+             
 
  
 

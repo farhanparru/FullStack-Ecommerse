@@ -6,9 +6,13 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   confirom: String,
-  cart: [{type: mongoose.Schema.ObjectId,ref: "Product",} ],  
-      // quantity: [{ type: Number, default: 1 }],
-  
+  cart: [
+    {type: mongoose.Schema.ObjectId,ref: "Product",
+    quantity: { type: Number, default: 1 },
+  },  
+     
+   
+    ],
     
   wishlist: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],
   orders: [{ type: mongoose.Schema.ObjectId, ref: "Orders" }],

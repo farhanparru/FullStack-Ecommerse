@@ -1,21 +1,24 @@
-import React, {  useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 // /import { Axios } from '../App'
 import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { Axios } from '../App';
+import { Axios, DataProductt } from '../App';
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 const View = () => {
-const isUser = localStorage.getItem("username")
+// const isUser = localStorage.getItem("userId")
 
 const navigate = useNavigate()
 const [product, setProduct]=useState([])
 const userId =localStorage.getItem("userId")
 const { id } = useParams()
+
+const {addToWishlist} = useContext(DataProductt)
+
 
 // console.log(userId,"hjai");
 
@@ -51,7 +54,7 @@ const handleAddToCart = async(event)=>{
      const response = await Axios.post(`http://localhost:3000/api/users/${userId}/cart`,{productId:id});
      console.log(response,"hhh");
 
-    //  console.log(response,"oooooo");
+     console.log(response,"oooooo");
 
      if(response && response.data && response.data.status === "success"){
            toast.success('Product successfully added to the  cart ')
@@ -217,6 +220,17 @@ const handleAddToCart = async(event)=>{
 
                   <i class="fas fa-shopping-cart mr-2"></i>
                   Go to Cart</button>
+
+            <button type="submit" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 px-8 py-3 text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" 
+
+                  onClick={()=>
+                  userId ? addToWishlist(product._id): toast.error("please login")
+                  } >
+
+                  <i class="far fa-heart mr-2"></i>
+                 Add to Wishlist
+                  </button>
+
                  
                 </form>
               </section>

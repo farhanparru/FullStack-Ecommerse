@@ -45,10 +45,10 @@ const Cart = () => {
              await Axios.put(`/api/users/${id}/cart`,data)
              const response = await Axios.get(`/api/users/${id}/cart`)
 
-             console.log(response,"kkk");
+             console.log(data,"kkk");
              
             
-             if(response.status === 200){
+             if(response.status === 201){
                 return fetchCart()
              }
           }catch (error){
@@ -59,6 +59,23 @@ const Cart = () => {
 
 
       //handle product remove
+
+       const handleRemoveItem = async (id)=>{
+          try{
+            const productId = id;
+            const response =  await Axios.delete(`/api/users/${userId}/cart`,{
+            data:{productId:productId},
+            })
+
+            fetchCart()
+            console.log(response,"ggg");
+          }catch(error){
+             console.log(error);
+             toast.error('Error removing product from a cart')
+          }
+       }
+
+
 
 
 
@@ -107,7 +124,7 @@ const Cart = () => {
                   </div>
                   <span className="ml-auto font-bold">${item.price}</span>
                   
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" style={{ marginLeft: '400px' }}>
+                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" style={{ marginLeft: '400px' }} onClick={()=>handleRemoveItem(item._id)}>
                    <i className="fas fa-trash" style={{ marginRight: '10px' }}></i>
                    Delete
                   </button>
