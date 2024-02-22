@@ -10,7 +10,7 @@ router.use(express.json())
 
 router
 .post("/login",tryCatchMiddleware(admin.login))
-.use(verifyToken)
+
 
 // apk middleware  start
 
@@ -21,12 +21,14 @@ router
 
 .get("/users",tryCatchMiddleware(admin.allUsers))
 .get("/user/:id",tryCatchMiddleware(admin.useById))
+
 .post("/products",imageUpload, tryCatchMiddleware(admin.creatProduct))
 .get("/products",tryCatchMiddleware(admin.allProducts))
+
 .get("/products/:id",tryCatchMiddleware(admin.productsById))
 .delete("/products",tryCatchMiddleware(admin.delteProduct))
-.put("/products:id",tryCatchMiddleware(admin.updateProduct))
-
+.use(verifyToken)
+.put("/products",tryCatchMiddleware(admin.updateProduct))
 .get("/orders",tryCatchMiddleware(admin.orderDetials))
 
 

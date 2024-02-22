@@ -11,7 +11,7 @@ module.exports={
 
     login: async(req,res)=>{
         const {email,password} = req.body;
-        console.log(req.body,'ggg')
+        // console.log(req.body,'ggg')
     
         if(
             email === process.env.ADMIN_EMAIL  &&
@@ -23,7 +23,9 @@ module.exports={
                 {email: email},
                 process.env.ADMIN_ACCESS_TOKEN_SECRET
             ); 
+            
             console.log(token,"fal");
+
             return res.status(200).send({
                 status:"Succes",
                 message:"Admin register Succes Fully 🙌 🎉",
@@ -228,51 +230,48 @@ module.exports={
         //   .json({status:"Success",message:"Product success fully update"})
         //  }
         updateProduct: async (req, res) => {
-          console.log(req.params.id, req.body)
-          const id = req.params.id
-          
-         
-        // if(!mongoose.Types.ObjectId.isValid(req.body.id)){
-        //   res.status(400).json("id is not valid")
-        // }
-          const { title, description, price, image, category } = req.body; 
-          console.log(req.body,'hhh');
-          // if(!title){
-          //   res.status(400).json("title is required")  
-          // }
-        
-          const product = await productSchema.find();
-        
-          if (!product) { 
-            return res
-              .status(404)
-              .json({ status: "Failure", message: "Product not found in the database" });
+          const {
+            title,
+            description,
+            price,
+            image,
+            category,
+            OldPrice,
+            ProcessorName,
+            SSDCapacity,
+            OperatingSystem,
+            BatteryBackup,
+            id
+           }=req.body
+
+         const product = await productSchema.findById(id);
+         if(!product){
+           return res.status(404).json({Error:"Product note a found"})
+         }
+         await productSchema.updateOne(
+          {_id:id},
+          {
+            $set:{
+              title:title,
+              description:description,
+              price:price,
+              image:image,
+              category:category,
+              OldPrice:OldPrice,
+              ProcessorName:ProcessorName,
+              SSDCapacity:SSDCapacity,
+              OperatingSystem:OperatingSystem,
+              BatteryBackup:BatteryBackup
+
+            }
           }
-        
-          try {
-            console.log("worikng")
-            await productSchema.findByIdAndUpdate(
-              { _id: id },
-              {
-                title,
-                description,
-                price,
-                image,
-                category,
-              }
-            );
-        
-            res
-              .status(200)
-              .json({ status: "Success", message: "Product successfully updated" });
-          } catch (error) {
-            console.error("Error updating product:", error);
-            res.status(500).json({
-              status: "Failure",
-              message: "Internal server error",
-              error_message: error.message,
-            });
-          }
+         );
+         res.status(201).json({
+          status:"success",
+          message:"Successfuly update the product"
+         })
+
+
         },
 
 

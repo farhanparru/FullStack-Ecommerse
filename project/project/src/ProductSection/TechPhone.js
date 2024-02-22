@@ -16,9 +16,9 @@ function TechPhone() {
          console.log(response,"hai");
 
          if(response.status===200){
-           toast.success('product SuccessFuly fetched',{
-             toastId:'success'
-           })
+          //  toast.success('product SuccessFuly fetched',{
+          //    toastId:'success'
+          //  })
            setProducts(response.data.data)
          }
        }catch(error){

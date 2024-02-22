@@ -1,5 +1,10 @@
+
 import React, { useEffect, useState } from 'react'
-import { Axios } from '../App'
+import { Axios } from '../App';
+import { toast } from 'react-toastify';
+import avatar from '../assets/avtar admin.png'
+import SideBar from './SideBar';
+
 
 
 
@@ -9,86 +14,64 @@ const [users,setUsers]=useState([])
 
 useEffect(()=>{
 
-  async function fetchUsers(){
-     try{
-       const jwtToken ={
-         headers:{
-          Authorization:`${localStorage.getItem("jwt")}`
-         }
-       }
-       console.log(jwtToken,"iiii");
-       const response = await Axios.get(
-        "http://localhost:3000/api/admin/users",jwtToken
-        )
-        console.log(response,"kkkk");
-
-        if(response.status === 200){
-           setUsers(response.data.data)
-        }
-     }catch (error){
-       console.log('Error fetching users:',error);
-     }
+ const fetchUsers = async ()=>{
+  try{
+    const response= await Axios.get('api/admin/users')
+  //  console.log(response,"kkk");
+    setUsers(response.data.data)
+  }catch(error){
+    console.log(error);
+    toast.error(error.message || "Failde to fetch users")
   }
+ };
   fetchUsers()
+  
 },[])
 
 
 
-
-  return (
-    <div className="overflow-x-auto">
-    {users.map((item)=>(
-        <table className="table">
+return (
+  <div style={{ display: 'flex' }}>
+    <SideBar />
+    <div className="overflow-x-auto " >
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
-          <tr key={item.useId}>
-            <th>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
+          <tr>
+            <th style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
+              <input type="checkbox" style={{ transform: 'scale(1.5)' }} />
             </th>
-            <th>username</th>
-            <th>EMail</th>
-            <th>ID</th>
+            <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>Username</th>
+            <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>Email</th>
+            <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>ID</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <label>
-                <input type="checkbox" className="checkbox" />
-              </label>
-            </td>
-            <td>
-              <div className="flex items-center gap-3">
-                <div className="avatar">
-                  <div className="mask mask-squircle w-12 h-12">
-                    <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
+          {users.map((item) => (
+            <tr key={item.userId}>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
+                <input type="checkbox" style={{ transform: 'scale(1.5)' }} />
+              </td>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ width: '48px', height: '48px', overflow: 'hidden', borderRadius: '50%', border: '2px solid #ddd' }}>
+                    <img src={avatar} alt="User Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
+                  <div style={{ marginLeft: '10px' }}>{item.username}</div>
                 </div>
-                <div>
-                  <div className="font-bold">{item.username}</div>
-                  <div className="text-sm opacity-50"></div>
-                </div>
-              </div>
-            </td>
-            <td>
-            {item.EMail}
-              <br />
-              <span className="badge badge-ghost badge-sm"></span>
-            </td>
-            <td>{item.ID}</td>
-            <td>
-              <button className="btn btn-ghost btn-xs">details</button>
-            </td>
-          </tr>
+              </td>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd', fontStyle: 'italic' }}>{item.email}</td>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>{item.id}</td>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
+                <button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px 16px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Details</button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-
-    ))}
-      
     </div>
-  );
+  </div>
+);
 };
 
 export default User;

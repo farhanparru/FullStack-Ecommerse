@@ -41,7 +41,7 @@ const SideBar = () => {
           <NavLink to="" activeClassName="activeClicked">
             <CDBSidebarMenuItem icon="store">Orders</CDBSidebarMenuItem>
           </NavLink>
-          <NavLink to="" activeClassName="activeClicked">
+          <NavLink to="/ProductList" activeClassName="activeClicked">
             <CDBSidebarMenuItem icon="list">Product List</CDBSidebarMenuItem>
           </NavLink>
           <NavLink to="/Addproduct" activeClassName="activeClicked">

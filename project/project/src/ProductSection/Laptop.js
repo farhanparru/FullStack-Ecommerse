@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
-import { toast } from 'react-toastify';
+
 import axios from 'axios';
 
 const Laptop = () => {
@@ -18,9 +18,9 @@ const Laptop = () => {
    
 
          if(response.status===200){
-           toast.success("product fetched successfully",{
-            toastId: 'success1',
-          })
+          //  toast.success("product fetched successfully",{
+          //   toastId: 'success1',
+          // })
           setProducts(response.data.data)
 
            

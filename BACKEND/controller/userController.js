@@ -202,6 +202,23 @@ module.exports ={
                     message:"Product not fount ☹️"
                  })
               }
+             
+               
+//                  // Check if the product is already in the cart
+// const isProductInCart = user && user.cart ? user.cart.some(cartItem => cartItem.type.toString() === productId) : false;
+
+// console.log(isProductInCart, "ooo");
+
+// if (isProductInCart) {
+//     return res.status(400).send({
+//         status: "Failure",
+//         message: "Product is already in the cart"
+//     });
+// }
+
+                 
+                
+                  
                    await User.updateOne({_id:userId},{$push:{cart:productId}})
                    res.status(200).json({
                      status:"success",
@@ -244,52 +261,52 @@ module.exports ={
                  //-> updateCartItemQuantity
 
                  updateCartItemQuantity: async (req, res) => {
-                  const userId = req.params.id;
-                  const { id, quantityChange } = req.body;
-              
-                  try {
-                      // Find the user
-                      const user = await User.findById(userId);
-                      if (!user) {
-                          return res.status(404).json({ message: "User not found" });
-                      }
-              
-                      // Find the cart item in the user's cart
-                      const cartItem = user.cart.find(item => item._id.toString() === id);
-                      console.log(cartItem,"ttt");
-                      if (!cartItem) {
-                          return res.status(404).json({ message: "Cart item not found" });
-                      }
-              
-                      // Update the quantity of the cart item
-                      cartItem.quantity += quantityChange;
-              
-                      // Ensure quantity doesn't go below 1
-                      if (cartItem.quantity < 1) {
-                          cartItem.quantity = 1;
-                      }
-              
-                      // Save the user
-                      await user.save();
-              
-                      res.status(200).json({
-                          status: "Success",
-                          message: 'Cart item quantity updated',
-                          data: user.cart
-                      });
-                  } catch (error) {
-                      console.error(error);
-                      res.status(500).json({ message: "Internal Server Error" });
+                  const userID = req.params.id;   
+                  const { id, quantityChange } = req.body; 
+                // console.log(id,"idd");
+                  const user = await User.findById(userID);
+                  
+                  if (!user) { 
+                    return res.status(404).json({ message: 'User not found' }) 
                   }
-              },
+                  const cartItem = user.cart.id(id)
+
+                  console.log(cartItem,"kkkk");
+                  
+                  if (!cartItem) { 
+                    return res.status(404).json({ message: 'Cart item not found' }) 
+                  }
+                  cartItem.quantity += quantityChange
+                
+                  if (cartItem.quantity > 0) {
+                    await user.save();
+                  }
+                  res.status(200).json({
+                    status: 'success',
+                    message: 'Cart item quantity updated',
+                    data: user.cart
+                  });
+                },
+                
               
              
 
- 
+              removeCartProduct: async(req,res)=>{
+                  const userId = req.params.id;
+                  const productId = req.body.productId;
+
+                  console.log(productId,"kk");
+
+                  await User.updateOne({_id:userId},{$pull:{cart:productId}})
+                  res.status(201).json({
+                     status:"success",
+                     message:"product removed from a cart "
+                  })
+              },
 
            
 
-
+             
 
               // removeCartProduct: async(req,res)=>{
               //    const userId = req.params.id

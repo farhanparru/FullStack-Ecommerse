@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
 
 const upload= multer ({storage})
 
+
 const cloudinary = require ("cloudinary").v2
+
 
 cloudinary.config({
    cloud_name:process.env. CLOUDINARY_NAME ,

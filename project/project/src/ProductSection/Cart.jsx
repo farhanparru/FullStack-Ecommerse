@@ -20,7 +20,9 @@ const Cart = () => {
   const fetchCart = async()=>{
      try{
        const response = await Axios.get(`http://localhost:3000/api/users/${userId}/cart`)
+       console.log(response,"res");
            if(response.status === 200){
+          
               setProducts(response.data.data)
            }
      }catch(error){

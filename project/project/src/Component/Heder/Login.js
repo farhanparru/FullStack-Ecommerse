@@ -34,9 +34,9 @@ const Login = () => {
    }
    let url = "http://localhost:3000/api/users/login"
    
-    if(email === Adminemail){
-      url ="http://localhost:3000/api/admin/login"
-    }
+    // if(email === Adminemail){
+    //   url ="http://localhost:3000/api/admin/login"
+    // }
 
     try{
       const payload = {email,password};
@@ -46,7 +46,7 @@ const Login = () => {
 
       if(response.status === 200){
         email !== Adminemail && localStorage.setItem("userId",response.data.userId);
-        email === Adminemail && localStorage.setItem("role","admin")
+        // email === Adminemail && localStorage.setItem("role","admin")
         localStorage.setItem("jwt",response.data.data);
         localStorage.setItem("email",response.data.Email)
       

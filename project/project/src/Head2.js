@@ -3,6 +3,7 @@ import { IoCloseCircle } from "react-icons/io5";
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { PiSignIn } from "react-icons/pi";
+import { FaSignOutAlt } from 'react-icons/fa'
 import { FaSearch } from "react-icons/fa";
 import Modal from 'react-modal';
 import { NavLink } from 'react-bootstrap';
@@ -32,6 +33,16 @@ const customStyles = {
 };
 function Head2() {
 
+  
+   const handleLogout = async()=>{
+     localStorage.removeItem('jwt')
+     localStorage.removeItem('email')
+     localStorage.removeItem('admin_Token')
+     localStorage.removeItem('userId')
+     localStorage.removeItem('admin_email')
+   }
+
+    
    const Navigate = useNavigate() 
    const userId = localStorage.getItem('userId')    
 
@@ -71,6 +82,11 @@ console.log(filteredProducts)
             </div>
             <div className='flex justify-between  w-full md:w-auto items-center p-4 gap-4'>
               <NavLink onClick={()=> HandleLogin('/Login')} ><PiSignIn className='text-white text-2xl' title='login'/></NavLink>
+
+              <NavLink  onClick={handleLogout}  className='text-white text-2xl'>
+             <FaSignOutAlt title='Logout' />
+        </NavLink>
+
               <BsCart4 onClick={()=>Navigate(`/Cart/${userId}`)} className='text-white text-3xl'  title='Cart'/>
               <div className="avatar">
                 <div className="w-10 mt-0 md:mt-4 mask mask-squircle">
