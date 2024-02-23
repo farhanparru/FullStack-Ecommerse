@@ -12,7 +12,7 @@ const productschema = new mongoose.Schema({
      ProcessorName:String,
      SSDCapacity:String,
      OperatingSystem:String,
-     OperatingSystem:String,
+     ScreenSize:String,
      BatteryBackup:String,
      quantity:String,
 

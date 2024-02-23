@@ -7,11 +7,13 @@ const userSchema = new mongoose.Schema({
   password: String,
   confirom: String,
   cart: [
-    {type: mongoose.Schema.ObjectId,ref: "Product",
+  {
+    productsId:{type: mongoose.Schema.ObjectId,ref: "Product" },
     quantity: { type: Number, default: 1 },
-  },  
-     
-   
+ 
+    
+
+  } 
     ],
     
   wishlist: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],

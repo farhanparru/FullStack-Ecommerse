@@ -11,13 +11,13 @@ const Productlist = () => {
     const navigate = useNavigate()
 
   
-    console.log(product,"kkk");
+    // console.log(product,"kkk");
 
     useEffect(()=>{
         const fetchProducts = async()=>{
             try{
                 const response = await Axios.get('http://localhost:3000/api/admin/products')
-                console.log(response,"kkkk");
+                // console.log(response,"kkkk");
 
                 if(response.status === 200){
                     setProduct(response.data.data)
@@ -49,9 +49,9 @@ const Productlist = () => {
     }
 
 
-    const handleEdit = ()=>{
-      navigate("/EditProduct")
-    }
+    
+      
+    
 
 
   return (
@@ -130,7 +130,7 @@ const Productlist = () => {
                       <i className="fas fa-trash-alt"></i>
                        </button>
 
-                       <button class="btn btn-outline-primary btn-sm mt-2" type="button" onClick={()=>handleEdit("/EditProduct")}>
+                       <button class="btn btn-outline-primary btn-sm mt-2" type="button" onClick={()=>navigate(`/EditProduct/${item._id}`)}>
                      <i class="fas fa-edit"></i>
                                  </button>
                       </div>

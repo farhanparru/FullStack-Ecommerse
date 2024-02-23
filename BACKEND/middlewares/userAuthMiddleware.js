@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 module.exports = function verifyToken (req,res, next) {
     // JSON Web Tokens (JWTs) sent in the headers of incoming requests.
     const token = req.headers["authorization"]
-        console.log(token);
+        // console.log(token);
     //If no token is found, it responds with a 403 status code and an error message.
     if(!token){
         return res.status(403).send({error:"No token Provided 🙆🏻‍♂️"})

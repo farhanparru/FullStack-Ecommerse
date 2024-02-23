@@ -13,7 +13,7 @@ const Laptop = () => {
     const fetchProducts = async()=>{
        try{
          const response= await axios.get(`http://localhost:3000/api/users/products`)
-          console.log(response.data.data,"hai");
+          // console.log(response.data.data,"hai");
          
    
 
@@ -37,10 +37,10 @@ const Laptop = () => {
 
 
 
- console.log(products)
+//  console.log(products)
   // Filter products based on category 'laptops'
   const laptopProducts = products.filter((item) => item.category === 'laptop');
-  console.log(laptopProducts)
+  // console.log(laptopProducts)
 
 
 

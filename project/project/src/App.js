@@ -20,12 +20,14 @@
   import Adminlogin from './AdminSide/Adminlogin';
   import AdminHome from './AdminSide/AdminHome';     
   import AddProduct from './AdminSide/AddProduct';
-  import Payment from './ProductSection/payment';
+  
 import User from './AdminSide/User';
 import Allproduct from './ProductSection/Allproduct';
 import ProductWishlist from './ProductSection/ProductWishlist';
 import Productlist from './AdminSide/Productlist';
 import EditProduct from './AdminSide/EditProduct';
+import Success from './ProductSection/Success';
+import Order from './AdminSide/Order';
 
 
   // console.log( process.env.REACT_APP_API_URL,"hai");
@@ -143,12 +145,13 @@ import EditProduct from './AdminSide/EditProduct';
           <Route path='/AdminLogin' element={<Adminlogin/>}/>
           <Route path='/AdminHome' element={<AdminHome/>}/>
           <Route path='/Addproduct' element={<AddProduct/>}/>
-          <Route path='/payment' element={<Payment/>}/>
           <Route path='/user' element={<User/>}/>
           <Route path='/allProducts' element={<Allproduct/>}/>
           <Route path='/Wishlist' element={<ProductWishlist/>}/>
           <Route path='/ProductList' element={<Productlist/>}/>
-          <Route path='/EditProduct' element={<EditProduct/>}/>
+          <Route path='/EditProduct/:id' element={<EditProduct/>}/>
+          <Route path='/api/users/payment/success' element={<Success/>}/>
+          <Route path='/Order' element={<Order/>}/>
         </Routes>
         {
         ijdsk&&

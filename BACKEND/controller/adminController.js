@@ -244,6 +244,9 @@ module.exports={
             id
            }=req.body
 
+         console.log(req.body);
+
+
          const product = await productSchema.findById(id);
          if(!product){
            return res.status(404).json({Error:"Product note a found"})

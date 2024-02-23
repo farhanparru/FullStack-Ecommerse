@@ -148,7 +148,7 @@ module.exports ={
            productById: async(req,res)=>{
              const productId = req.params.id;
              const prod = await product.findById(productId)
-             console.log(prod);
+            //  console.log(prod);
              if(!prod){
                 
                 return res.status(404).json({ 
@@ -166,7 +166,7 @@ module.exports ={
 
            productsByCatogery:async(req,res)=>{
              const prodCatogery= req.params.categoryname;
-             console.log(prodCatogery);
+            //  console.log(prodCatogery);
              const products = await product.find({category: prodCatogery});
              if(!products){
                 return res.status(404).send({
@@ -182,55 +182,59 @@ module.exports ={
            },
            //->User add to Cart
 
-           addToCart: async(req,res)=>{
-              const userId =req.params.id;
-              console.log(userId);
-              const user = await User.findById(userId);
-            //  console.log(user);
-              if(!user){
-                 return res.status(404).send({
-                    status:"Failer",
-                    message:"User Note Found 🚫",
-                 })
-              }
-              const productId = req.body.productId
-              console.log(productId);
-             //Check if productId is provided
-              if(!productId){
-                 return res.status(404).send({
-                    status:"Failer",
-                    message:"Product not fount ☹️"
-                 })
-              }
-             
-               
-//                  // Check if the product is already in the cart
-// const isProductInCart = user && user.cart ? user.cart.some(cartItem => cartItem.type.toString() === productId) : false;
+           addToCart: async (req, res) => {
+            const userId = req.params.id;
+            try {
+                const user = await User.findById(userId);
+                if (!user) {
+                    return res.status(404).send({
+                        status: "Failure",
+                        message: "User Not Found 🚫",
+                    });
+                }
+        
+                const { productId } = req.body;
+                if (!productId) {
+                    return res.status(404).send({
+                        status: "Failure",
+                        message: "Product not found ☹️",
+                    });
+                }
+        
+                // Ensure cart is initialized
+                if (!user.cart) {
+                    user.cart = [];
+                }
+        
+                const isProductInCart = user.cart.some(item => item.productsId.equals(productId));
+                if (isProductInCart) {
+                    return res.status(400).send({
+                        status: "Failure",
+                        message: "Product is already in the cart",
+                    });
+                }
+        
+                await User.updateOne({ _id: userId }, { $addToSet: { cart: { productsId: productId } } });
+                res.status(200).json({
+                    status: "success",
+                    message: "Product successfully added to cart",
+                });
+            } catch (error) {
+                console.error(error);
+                res.status(500).send({
+                    status: "Error",
+                    message: "Internal Server Error",
+                });
+            }
+        },
+        
 
-// console.log(isProductInCart, "ooo");
-
-// if (isProductInCart) {
-//     return res.status(400).send({
-//         status: "Failure",
-//         message: "Product is already in the cart"
-//     });
-// }
-
-                 
-                
-                  
-                   await User.updateOne({_id:userId},{$push:{cart:productId}})
-                   res.status(200).json({
-                     status:"success",
-                     message:"Product SuccessFully added to cart"
-                   })
-                 },
 
               //-> view product from a cart
                   viewCartProduct: async (req,res)=>{
                     const userId = req.params.id;
                     const user = await  User.findById(userId) 
-                        // console.log(user);
+                        // console.log(user,'useerrr');
                     if(!user){
                         return res
                         .status(404)
@@ -238,25 +242,26 @@ module.exports ={
                     }
 
                     const cartProductIds = user.cart
-                    // console.log(cartProductIds);
+
                     if(cartProductIds.length === 0){
                             return res
                             .status(200)
                             .json({status:"Succes",message:"User Cart is Emty 🛒",data:[]})
                     }
 
-                    const cartProducts = await product.find({_id:{$in:cartProductIds}})
-                    console.log(cartProducts,"kkk");
-                   
-                    res
-                    .status(200)
-                    .json({
-                        status:"Success",
-                        message:"Cart products fetched SuccessFully",
-                        data:cartProducts 
-                        
-                    })
-                 },
+                    const cartProducts = await User.findOne({_id: userId}).populate("cart.productsId")
+    res
+      .status(200)
+      .json({
+        status: "Success",
+        message: "Cart products fetched successfully",
+        data: cartProducts.cart,
+      });
+          },
+
+
+
+
 
                  //-> updateCartItemQuantity
 
@@ -265,6 +270,8 @@ module.exports ={
                   const { id, quantityChange } = req.body; 
                 // console.log(id,"idd");
                   const user = await User.findById(userID);
+
+                  // console.log(user,"user");
                   
                   if (!user) { 
                     return res.status(404).json({ message: 'User not found' }) 
@@ -281,7 +288,7 @@ module.exports ={
                   if (cartItem.quantity > 0) {
                     await user.save();
                   }
-                  res.status(200).json({
+                  res.status(201).json({
                     status: 'success',
                     message: 'Cart item quantity updated',
                     data: user.cart
@@ -291,19 +298,25 @@ module.exports ={
               
              
 
-              removeCartProduct: async(req,res)=>{
+                removeCartProduct: async (req, res) => {
                   const userId = req.params.id;
                   const productId = req.body.productId;
-
-                  console.log(productId,"kk");
-
-                  await User.updateOne({_id:userId},{$pull:{cart:productId}})
-                  res.status(201).json({
-                     status:"success",
-                     message:"product removed from a cart "
-                  })
+              
+                  try {
+                      await User.updateOne({ _id: userId }, { $pull: { "cart": { "productsId": productId } } });
+                      res.status(201).json({
+                          status: "success",
+                          message: "Product removed from the cart."
+                      });
+                  } catch (error) {
+                      res.status(500).json({
+                          status: "error",
+                          message: "Failed to remove product from the cart.",
+                          error: error.message
+                      });
+                  }
               },
-
+              
            
 
              
@@ -398,7 +411,7 @@ module.exports ={
                       }
                         //It then checks if the user's wishlist is empty.
                       const wishProdId = user.wishlist;
-                      console.log(wishProdId,"shjkdh");
+                      // console.log(wishProdId,"shjkdh");
 
                       if(wishProdId .length === 0){
                          return res
@@ -444,48 +457,48 @@ module.exports ={
                           //-> Payments user purchase
                       payment: async (req,res)=>{
                           const userId = req.params.id;
-                          // Finding the user with the given ID and populating their cart items
-                          const user = await User.findOne({_id: userId}).populate('cart')
-                          
-                          
+                        
+                          const user = await User.findOne({_id: userId}).populate('cart.productsId')
+                            
+                               
                           if(!user){
                                return res.status(404).json({message: "User Note Found"})
                           }
-                          // Extracting cart items from the user object
+                         
                               const cartProducts = user.cart;
-                             // If the user's cart is empty, return success with an empty array
+                             
                                if(cartProducts.lenght === 0){
                                  return res
                                  .status(200)
                                  .json({status:"Success",message:"User Cart Is Emty",data:[]})
                                }      
-                                 // Mapping cart items to line items required for Stripe payment session
+                                 
                                const  lineItems =  cartProducts.map((item)=>{
                                
                                     return {
                                       price_data:{
                                       currency:"inr",
                                       product_data:{
-                                      name: item.title,
-                                      description:item.description
+                                      name: item.productsId.title,
+                                      description:item.productsId.description
                                       },
-                                      unit_amount:Math.round(item.price * 100)
+                                      unit_amount:Math.round(item.productsId.price * 100)
                                       },
                                       quantity: 1,
                                     };
                                  }) ;
                                
-                              // Creating Payment Session with Stripe using line items
+                              
                                 const  session = await stripe.checkout.sessions.create({
                            
                                     payment_method_types:['card'],
                                     line_items: lineItems,
                                     mode: "payment",
-                                    success_url:`http://localhost:3000/api/users/payment/success`,//Replace with your success URL
+                                    success_url:`http://localhost:3001/api/users/payment/success`,//Replace with your success URL
                                     cancel_url:"http://localhost:3000/api/users/payment/cansel"//replace with your cancel url
 
                                  });
-                                 console.log(session,"sio");
+                                //  console.log(session,"sio");
 
                                  if(!session){
                                    return res.json({
@@ -493,13 +506,13 @@ module.exports ={
                                      message:"Error occured on session side",
                                    })
                                  }
-                                  //sValue is an object used to store relevant information about the payment session and the user initiating the payment(Storing Session Data in sValue)
+                                  
                                  sValue ={
                                    userId,
                                    user,
                                    session,
                                  };
-                                //  console.log(sValue,"si");
+                               
 
                                  res.status(200).json({    
                                    status:"Success",
@@ -510,36 +523,30 @@ module.exports ={
                            
                             success: async (req,res)=>{
                              
-                               // Destructuring values from the stored session data (sValue)
+                              
                                 const{id,user,session} = sValue;
                                     
-                                // Extracting the user's unique identifier
-                                const  userId = user._id;
                                
-                                  // Extracting the cart items from the user object
+                                const  userId = user._id;  
                                 const cartItems = user.cart;
-                                  // Creating an order using the cart items and session details
+
+                                const productsId = cartItems.map((item)=> item.productsId)
                                 const orders = await Order.create({
                                  
                                    userId: id,
-                                   products:cartItems.map(
-                                    (value) => new mongoose.Types.ObjectId(value._id)
-                                   ),
-                                   
+                                   products:productsId, 
                                    order_id:session.id,
-                                  // Generates a unique payment_id for the order by concatenating "demo" with the current timestamp
-                                  payment_id: `demo ${Date.now()}`,
-                                   // Calculates the total amount of the order by dividing the session amount_total by 100 (assuming the amount_total is in cents)
+                                   payment_id: `demo ${Date.now()}`,
                                    total_amount:session.amount_total/100,
 
                   
                                 });
-                                console.log(orders,"uie");
+                                
 
                                 if(!orders){
                                     return res.json({message:"error occured whil inputing to orderDB"})
                                 }
-                              // Updating the user document in the database
+                           
                                 const orderId = orders._id;
                                 const userUpdate = await User.updateOne(
                                    {_id:userId},

@@ -4,14 +4,17 @@ import { Axios } from "../App";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+const userId = localStorage.getItem('userId')
+
 
 
 
 const Cart = () => {
 
   const[products,setProducts]=useState([])
+
+  // console.log(products,'proooi')
   const {id} = useParams()
-  const userId = localStorage.getItem('userId')
   const navigate = useNavigate()
 
 
@@ -41,17 +44,16 @@ const Cart = () => {
 
       const handleQuantity = async (cartID,quantityChange)=>{
           const data = {id: cartID,quantityChange}
-          // console.log(data,"oo");
+          console.log(data,"oo");
           
           try{
              await Axios.put(`/api/users/${id}/cart`,data)
              const response = await Axios.get(`/api/users/${id}/cart`)
-
-             console.log(data,"kkk");
-             
-            
-             if(response.status === 201){
+            //  console.log(response)
+             if(response){
+              // setQuantityValue(response.data.data)
                 return fetchCart()
+
              }
           }catch (error){
             console.log(error);
@@ -65,10 +67,12 @@ const Cart = () => {
        const handleRemoveItem = async (id)=>{
           try{
             const productId = id;
-            const response =  await Axios.delete(`/api/users/${userId}/cart`,{
+           
+            const response =  await Axios.delete(`http://localhost:3000/api/users/${userId}/cart`,{
+            
             data:{productId:productId},
             })
-
+         
             fetchCart()
             console.log(response,"ggg");
           }catch(error){
@@ -77,6 +81,26 @@ const Cart = () => {
           }
        }
 
+     //payment  Hnadle
+
+     const handleChekout = async ()=>{
+       try{
+        // console.log(userId,"ll");
+
+        const response = await  Axios.post(`http://localhost:3000/api/users/${userId}/payment`)
+
+        console.log(response.data);
+
+
+        if(response.status === 200){
+           const url = response.data.url
+           const confermation = window.confirm('Payment session created. Redirecting to the payment gateway.Continue?')
+           if(confermation) window.location.replace(url)
+        }
+       }catch(error){
+          console.log(error);
+       }
+     };
 
 
 
@@ -87,7 +111,7 @@ const Cart = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row md:justify-between md:items-center">
           <h1 className="text-2xl font-bold my-4">Shopping Cart</h1>
-          <button className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" onClick={()=>navigate('/payment')}>
+          <button className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded"onClick={()=>handleChekout()} >
             Checkout
           </button>
         </div>
@@ -96,12 +120,12 @@ const Cart = () => {
             <div key={index} className="flex flex-col md:flex-row border-b border-gray-400 py-4">
             
               <div className="flex-shrink-0">
-                <img src={item.image} alt="Product image" className="w-32 h-32 object-cover" />
+                <img src={item.productsId.image} alt="Product image" className="w-32 h-32 object-cover" />
               </div>
               <div className="mt-4 md:mt-0 md:ml-6">
-                <h2 className="text-lg font-bold">{item.title}</h2>
-                <p className="mt-2 text-gray-600">Price:${item. price}</p>
-                <p className="mt-2 text-gray-600">OldPrice:${item.OldPrice}</p>
+                <h2 className="text-lg font-bold">{item.productsId.title}</h2>
+                <p className="mt-2 text-gray-600">Price:${item.productsId. price}</p>
+                <p className="mt-2 text-gray-600">OldPrice:${item.productsId.OldPrice}</p>
                 <div className="mt-4 flex items-center">
                   <span className="mr-2 text-gray-600">Quantity:</span>
 
@@ -124,9 +148,9 @@ const Cart = () => {
 
 
                   </div>
-                  <span className="ml-auto font-bold">${item.price}</span>
+                  <span className="ml-auto font-bold">${item.productsId.price}</span>
                   
-                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" style={{ marginLeft: '400px' }} onClick={()=>handleRemoveItem(item._id)}>
+                  <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" style={{ marginLeft: '400px' }} onClick={()=>handleRemoveItem(item.productsId._id)}>
                    <i className="fas fa-trash" style={{ marginRight: '10px' }}></i>
                    Delete
                   </button>

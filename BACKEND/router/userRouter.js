@@ -13,10 +13,14 @@ router
 
 .get("/products",tryCatchMiddleware(userController.viewProduct))
 .get("/products/:id",tryCatchMiddleware(userController.productById))
-.use(verifyToken) 
+
 
 .get("/products/category:categoryname",tryCatchMiddleware(userController.productsByCatogery))
 .post("/:id/cart",tryCatchMiddleware(userController.addToCart))
+
+.post("/:id/payment",tryCatchMiddleware(userController.payment))
+.get("/payment/success",tryCatchMiddleware(userController.success))
+.use(verifyToken) 
 .get("/:id/cart",tryCatchMiddleware(userController.viewCartProduct))
 .put("/:id/cart",tryCatchMiddleware(userController.updateCartItemQuantity))
 .delete("/:id/cart",tryCatchMiddleware(userController.removeCartProduct))
@@ -27,8 +31,6 @@ router
 .get("/:id/wishlists",tryCatchMiddleware(userController.showWishlist))
 .delete("/:id/wishlists",tryCatchMiddleware(userController.deleteWishlist))
 
-.post("/:id/payment",tryCatchMiddleware(userController.payment))
-.get("/payment/success",tryCatchMiddleware(userController.success))
 .post("/payment/cansel",tryCatchMiddleware(userController.Cancel))
 .get("/:id/orders",tryCatchMiddleware(userController.orderDetails))
 

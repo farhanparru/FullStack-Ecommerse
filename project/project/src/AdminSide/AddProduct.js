@@ -41,7 +41,7 @@ const AddProduct = () => {
     fromData.append('description',description)
     fromData.append('price',price)
     fromData.append('category',category)
-    fromData.append('oldPrice',OldPrice)
+    fromData.append('OldPrice',OldPrice)
     fromData.append('processorName',processorName)
     fromData.append('SSDCapacity',SSDCapacity)
     fromData.append('OperatingSystem',OperatingSystem)
@@ -62,7 +62,7 @@ const AddProduct = () => {
       fromData,jwtToken
 
       )
-     console.log(response,"kkkkk");
+    //  console.log(response,"jj");
 
    if(response.status === 201){
       toast.success('Product added successFully')
@@ -106,7 +106,7 @@ const AddProduct = () => {
             <div style={{ flex: '0 0 48%' }}>
               <label style={{ display: 'block', marginBottom: '5px' }}>OldPrice</label>
               <input type="number" style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} placeholder="Enter old price"
-              name="oldPrice"
+              name="OldPrice"
               className='from-control'
               onChange={(e)=>setOldPrice(e.target.value)}
                />

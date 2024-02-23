@@ -52,7 +52,7 @@ const Login = () => {
       
         if(email === Adminemail){
           Navigate("/View/:id")
-          toast.success("Login Successful");
+          // toast.success("Login Successful");
         }else{
           setTimeout(()=>{
             localStorage.removeItem("jwt")
@@ -99,7 +99,7 @@ const Login = () => {
     // If both email and password are valid, you can proceed with the login logic.
     // For now, just clear the error message.
     setError('');
-    toast.success('Login SuccessFully');
+    // toast.success('Login SuccessFully');
 
     Navigate('/')
    

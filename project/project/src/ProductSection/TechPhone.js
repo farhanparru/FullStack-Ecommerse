@@ -13,7 +13,7 @@ function TechPhone() {
     const fetchproduct = async()=>{
        try{
          const response = await Axios.get('http://localhost:3000/api/users/products')
-         console.log(response,"hai");
+        //  console.log(response,"hai");
 
          if(response.status===200){
           //  toast.success('product SuccessFuly fetched',{
