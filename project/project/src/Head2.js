@@ -7,7 +7,7 @@ import { PiSignIn } from "react-icons/pi";
 import { FaSignOutAlt } from 'react-icons/fa'
 import { FaSearch } from "react-icons/fa";
 import Modal from 'react-modal';
-import { Button, NavLink } from 'react-bootstrap';
+import {  NavLink } from 'react-bootstrap';
 import { BsCart4 } from "react-icons/bs";
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

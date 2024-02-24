@@ -4,8 +4,8 @@ import { Axios } from '../App';
 import { toast } from 'react-toastify';
 import avatar from '../assets/avtar admin.png'
 import SideBar from './SideBar';
-
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBan, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -33,8 +33,8 @@ useEffect(()=>{
 return (
   <div style={{ display: 'flex' }}>
     <SideBar />
-    <div className="overflow-x-auto " >
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <div style={{ margin: 'auto' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: "140%" }}>
         <thead>
           <tr>
             <th style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
@@ -43,7 +43,7 @@ return (
             <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>Username</th>
             <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>Email</th>
             <th style={{ padding: '12px', borderBottom: '5px solid #ddd', fontWeight: 'bold' }}>ID</th>
-            <th></th>
+          
           </tr>
         </thead>
         <tbody>
@@ -61,10 +61,20 @@ return (
                 </div>
               </td>
               <td style={{ padding: '12px', borderBottom: '1px solid #ddd', fontStyle: 'italic' }}>{item.email}</td>
-              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>{item.id}</td>
-              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
-                <button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px 16px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Details</button>
-              </td>
+              <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>{item._id}</td>
+           
+                <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
+                 
+                    <button style={{ backgroundColor: '#FF0000', color: 'white', padding: '8px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                      <FontAwesomeIcon icon={faBan} /> Unblock
+                    </button>
+                 
+                    <button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
+                      <FontAwesomeIcon icon={faCheckCircle} /> Block
+                    </button>
+                 
+                </td>
+           
             </tr>
           ))}
         </tbody>

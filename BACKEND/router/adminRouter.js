@@ -29,8 +29,8 @@ router
 .delete("/products",tryCatchMiddleware(admin.delteProduct))
 
 .put("/products",tryCatchMiddleware(admin.updateProduct))
-.use(verifyToken)
-.get("/orders",tryCatchMiddleware(admin.orderDetials))
 
+.get("/orders",tryCatchMiddleware(admin.orderDetials))
+.use(verifyToken)
 
 module.exports = router 

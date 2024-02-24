@@ -10,4 +10,4 @@ const orderSchema = mongoose.Schema({
     total_amount: Number,
 })
 
-module.exports = mongoose.model('Orders', orderSchema)
+module.exports = mongoose.model('orders', orderSchema)

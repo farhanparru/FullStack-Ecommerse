@@ -282,6 +282,7 @@ module.exports={
 
         orderDetials:async (req,res)=>{
             const products = await Order.find()
+            console.log(products,"pppp");
           
             if(products.length === 0){
                 return res.status(200).json({

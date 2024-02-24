@@ -586,6 +586,8 @@ module.exports ={
                           const userId = req.params.id;
                           //method is used to automatically replace the orders field in the user document with actual order documents
                           const user = await User.findById(userId).populate('orders')
+                        
+                          console.log(user,"lll");
 
                           if(!user){
                              return res.status(404).json({
