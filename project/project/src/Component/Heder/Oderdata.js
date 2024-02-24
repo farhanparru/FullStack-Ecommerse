@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { Axios } from '../../App'
-import SideBar from '../../AdminSide/SideBar'
+import React, { useEffect, useState } from 'react';
+import { Axios } from '../../App';
+import SideBar from '../../AdminSide/SideBar';
+import { FaEye } from 'react-icons/fa'; // Importing Eye icon from react-icons library
+import { FaCalendarAlt, FaClock, FaMoneyBillAlt } from 'react-icons/fa'; 
+import { FaCreditCard } from 'react-icons/fa';
 
-const Oderdata = () => {
+const OrderData = () => {
+  const [data, setData] = useState([]);
 
-const [data,setdata]=useState([])
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const response = await Axios.get('api/admin/orders');
 
-
-
-useEffect(()=>{
-    const fetchOrder = async ()=>{
-        try{
-            const response = await Axios.get('api/admin/orders')
-            // console.log(response,"ll");
-
-            if(response.status === 200){
-                setdata(response.data.products)
-            }
-        }catch(error){
-            console.log(error);
+        if (response.status === 200) {
+          setData(response.data.products);
         }
-    }
-    fetchOrder()
-},[])
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchOrder();
+  }, []);
 
-
-
-
-return (
-    <div style={{ display: 'flex' }}>
-      <SideBar/>
-      {data.map((products)=>(
-        <div className="table-responsive" style={{ margin: 'auto' }}>
-          <table className="table table-striped" style={{marginBottom:"120%"}}>
-            <thead>
-              <tr>
-                <th>Product ID</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>PaymentId</th>
-                <th>Total</th>
+  return (
+    <div style={{ display: 'flex', gap: '20px' }}>
+      <SideBar />
+      <div style={{ margin: 'auto' }}>
+        <h2>Order Summary</h2>
+        <table style={{ borderCollapse: 'collapse', width: '100%' ,marginBottom:"129vh"}}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid #ddd' }}>
+              <th style={{ padding: '8px', textAlign: 'left', width: '10%' }}><FaCalendarAlt/> Product ID</th>
+              <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaClock/> Date</th>
+              <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaCreditCard/> Payment ID</th>
+              <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaMoneyBillAlt/> Total</th>
+              <th style={{ padding: '8px', textAlign: 'left', width: '10%' }}>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((product) => (
+              <tr key={product._id} style={{ borderBottom: '1px solid #ddd' }}>
+                <td style={{ padding: '8px' }}>{product._id}</td>
+                <td style={{ padding: '8px' }}>{product.date}</td>
+                <td style={{ padding: '8px' }}>{product.payment_id}</td>
+                <td style={{ padding: '8px' }}>{product.total_amount}</td>
+                <td style={{ padding: '8px' }}>
+                  <button className="view-icon" style={{ border: 'none', background: 'none' }}>
+                    <FaEye className="icon" style={{ transition: 'transform 0.3s ease-in-out' }} />
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              <tr style={{ animation: 'fadeIn 0.5s ease-in-out' }}>
-                <td>{products._id}</td>
-                <td>{products.date}</td>
-                <td>{products.time}</td>
-                <td>{products.payment_id}</td>
-                <td>{products.total_amount}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      ))}
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
-      }
-  export default Oderdata;
-  
+};
+
+export default OrderData;

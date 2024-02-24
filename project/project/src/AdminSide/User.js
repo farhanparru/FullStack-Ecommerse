@@ -65,14 +65,18 @@ return (
            
                 <td style={{ padding: '12px', borderBottom: '1px solid #ddd' }}>
                  
-                    <button style={{ backgroundColor: '#FF0000', color: 'white', padding: '8px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                      <FontAwesomeIcon icon={faBan} /> Unblock
-                    </button>
-                 
-                    <button style={{ backgroundColor: '#4CAF50', color: 'white', padding: '8px', fontSize: '14px', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                      <FontAwesomeIcon icon={faCheckCircle} /> Block
-                    </button>
-                 
+                    
+                <select id="countries" style={{ backgroundColor: '#f3f4f6', border: '1px solid #cbd5e0', color: '#4a5568', fontSize: '14px', borderRadius: '6px', outline: 'none', padding: '8px 12px', width: '100%', boxSizing: 'border-box' }}>
+                <option selected style={{ color: '#6b7280' }}>Choose a user Action</option>
+                <option value="US" style={{ color: 'red' }}>
+                    <FontAwesomeIcon icon={faBan} /> Block
+                </option>
+                <option value="CA" style={{ color: '#047857' }}>
+                    <FontAwesomeIcon icon={faCheckCircle} /> Unblock
+                </option>
+            </select>
+
+
                 </td>
            
             </tr>

@@ -25,7 +25,7 @@ a{
     align-items: center;
     justify-content: space-around;
     height: 8rem;
-    background: rgb(0,48,126);
+    background:rgb(0,48,126);
 }
 
 .nav_brand{
@@ -52,6 +52,26 @@ a{
     cursor: pointer;
     display: none;
 }
+
+.nav_icon {
+    font-size: 1.8rem; /* Adjust the font size to your preference */
+    margin-right: 0.5rem; /* Add some spacing between the icon and the text */
+}
+
+.nav_icons {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Adjust the gap between icons as needed */
+    margin-right: 2rem; /* Add some margin to the right to separate from the logo */
+}
+
+.nav_icons li {
+    list-style: none;
+    color: white;
+    font-size: 1.8rem; /* Adjust the font size of the text */
+}
+
+
 
 @media screen and (max-width:768px){
    .nav_toggler{
