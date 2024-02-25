@@ -10,10 +10,8 @@
   import { ToastContainer, toast } from 'react-toastify'
   import 'react-toastify/dist/ReactToastify.css';
   import Signup from './Component/Heder/Signup';
-  import NewCom2 from './Component/Heder/ProdcutList/NewCom2';
   import View from './ProductSection/View';
   import { DataProduct } from './ProductSection/ProductData';
-  import Scree from './ProductSection/Scree';
   import Cart from './ProductSection/Cart';
   import  axios from 'axios' 
   import Adminlogin from './AdminSide/Adminlogin';
@@ -29,7 +27,7 @@ import Success from './ProductSection/Success';
 import Order from './AdminSide/Order';
 import Oderdata from './Component/Heder/Oderdata';
 import Video from './Component/Heder/ProdcutList/Video';
-import Bar from './Bar';
+import EyeOder from './AdminSide/EyeOder';
 
 
   // console.log( process.env.REACT_APP_API_URL,"hai");
@@ -135,10 +133,10 @@ import Bar from './Bar';
         addToWishlist
 
         }}>
-       {/* <Head2/> */}
-       <Bar/>
+       <Head2/>
+       {/* <Bar/> */}
         <Routes>
-          {/* <Route path='/' element={<Bennar/>} /> */}
+          <Route path='/' element={<Bennar/>} />
           <Route path='/Phone' element={<TechPhone/>}/>
           <Route path='/laptop' element={<Laptop/>}/>
           <Route path='/Login' element={<Login/>}/>
@@ -156,14 +154,15 @@ import Bar from './Bar';
           <Route path='/api/users/payment/success' element={<Success/>}/>
           <Route path='/Order/:id' element={<Order/>}/>
           <Route path='/viewOder' element={<Oderdata/>}/>
+          <Route path='/EyeOder/:id' element={<EyeOder/>}/>
         </Routes>
         {
         ijdsk&&
           <>
         <Brand/>
        <Video/>
-        {/* <NewCom2/> */}
-        <Scree/>
+       
+        
         
         </>
         

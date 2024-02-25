@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaptop, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { faHome, faSignInAlt, faShoppingCart, faUser, faHeart, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import '../src/navabar.css';
+// import '../src/navabar.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Bar = () => {

@@ -4,9 +4,13 @@ import SideBar from '../../AdminSide/SideBar';
 import { FaEye } from 'react-icons/fa'; // Importing Eye icon from react-icons library
 import { FaCalendarAlt, FaClock, FaMoneyBillAlt } from 'react-icons/fa'; 
 import { FaCreditCard } from 'react-icons/fa';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const OrderData = () => {
   const [data, setData] = useState([]);
+   const navigate = useNavigate()
+
+   const{id}=useParams()
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -22,6 +26,11 @@ const OrderData = () => {
     };
     fetchOrder();
   }, []);
+
+
+
+
+  
 
   return (
     <div style={{ display: 'flex', gap: '20px' }}>
@@ -47,7 +56,7 @@ const OrderData = () => {
                 <td style={{ padding: '8px' }}>{product.total_amount}</td>
                 <td style={{ padding: '8px' }}>
                   <button className="view-icon" style={{ border: 'none', background: 'none' }}>
-                    <FaEye className="icon" style={{ transition: 'transform 0.3s ease-in-out' }} />
+                    <FaEye  onClick={() => navigate(`/EyeOder/${product._id}`)}className="icon" style={{ transition: 'transform 0.3s ease-in' }} />
                   </button>
                 </td>
               </tr>

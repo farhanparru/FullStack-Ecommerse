@@ -31,6 +31,8 @@ router
 .put("/products",tryCatchMiddleware(admin.updateProduct))
 
 .get("/orders",tryCatchMiddleware(admin.orderDetials))
-.use(verifyToken)
 
+.get("/viewOrder/:id",tryCatchMiddleware(admin.viewOder))
+.use(verifyToken)
 module.exports = router 
+

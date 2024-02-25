@@ -7,20 +7,25 @@ import { toast } from 'react-toastify';
 const ProductWishlist = () => {
 
    const userId =localStorage.getItem("userId")
+  
 
    const [products,setProducts] = useState([])
 
-console.log(products,"kk");
+
 
 
    const fetchWishlist = async ()=>{
      try{
         const response = await Axios.get(`api/users/${userId}/wishlists`)
+   
 
-         console.log(response.data.date,"tttt");
+       
+   
         
         if(response.status === 200){
             setProducts(response.data.date)
+
+            console.log(response.data.date,"lll");
         }
      }catch(error){
         console.log(error);
@@ -35,10 +40,14 @@ console.log(products,"kk");
   //remove wishlist
 
   const removeFromWishlist = async(productId)=>{
+    console.log(productId,'kk');
+       
     try{
         const response = await Axios.delete(`api/users/${userId}/wishlists`,{
             data:{productId}
         });
+
+    
 
         if(response.status === 200){
              toast.success(response.data.message)

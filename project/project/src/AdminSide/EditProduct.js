@@ -23,7 +23,7 @@ const EditProduct = () => {
 
   })
 
-  console.log(productData.image,"kkk");
+  // console.log(productData.image,"kkk");
 
   useEffect(()=>{
 

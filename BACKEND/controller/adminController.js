@@ -295,6 +295,33 @@ module.exports={
                products,
             })
         },
+
+
+        viewOder:async(req,res)=>{
+          
+          const producId = req.params.id
+
+           try{
+              const orders = await Order.findById(producId).populate('products')
+
+              if(orders.length === 0){
+                   return res.status(200).json({
+                      message:"No Orders"
+                   })
+              }
+                  res.status(200).json({
+                    status: "Success",
+                    message: "Successfully fetched order details",
+                    orders,
+              })
+           }catch(error){
+               console.log('Error fetching order deteails',error);
+               res.status(500).json({
+                  status:"Error",
+                  message:"Internel server errror"
+               })
+           }
+        }
         
       
     }

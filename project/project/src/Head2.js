@@ -95,8 +95,8 @@ function Head2() {
                
               </>
             )}
-            <button><FaSearch className='text-3xl text-white' onClick={() => setSearch(true)} /></button>
-           
+            {/* <button><FaSearch className='text-3xl text-white' onClick={() => setSearch(true)} /></button>
+            */}
           </div>
         </Navbar.Collapse>
       </Container>

@@ -6,6 +6,25 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   confirom: String,
+
+//  password:{
+//     type:String,
+//     required:true
+//  },
+
+ isVerified:{
+  type:Boolean,
+  default:false
+ },
+
+ isActive:{
+  type:Boolean,
+  default:true
+ },
+
+
+
+
   cart: [
   {
     productsId:{type: mongoose.Schema.ObjectId,ref: "Product" },
@@ -19,6 +38,11 @@ const userSchema = new mongoose.Schema({
   wishlist: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],
   orders: [{ type: mongoose.Schema.ObjectId, ref: "Orders" }],
 });
+
+
+
+
+
 
 // password encrpusiton this a security purposse
 userSchema.pre("save", async function (next) {

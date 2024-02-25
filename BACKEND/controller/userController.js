@@ -5,11 +5,16 @@ const Order = require('../models/orderSchema')
 const { joiUserSchema } = require("../models/validationSchema")
 const bcrypt=require("bcrypt")
 const jwt = require("jsonwebtoken") //Json Web Token Security puropsse
-const {default:mongoose}= require("mongoose") //ES6 Module syntex default Commmon js 
+const {default:mongoose, Error}= require("mongoose") //ES6 Module syntex default Commmon js 
 const {json} = require('body-parser')
 const  stripe = require("stripe")(process.env. STRIPE_SECRET_KEY);
-console.log(process.env.STRIPE_SECRET_KEY,"hhs");
+const nodemailer = require('nodemailer')
+// console.log(process.env.STRIPE_SECRET_KEY,"hhs");
 let sValue = []
+
+
+   //for verifyi email
+
 
 
  
@@ -26,18 +31,31 @@ module.exports ={
                 message:"Invalid user input ☹️. Please check your data. 🙂"
             })
         }
-        await User.create({
+      const user =   await User.create({
        
             email:email,
             username:username,
             password:password,
             confirom:confirom
         })
+       
+        
+
+      
+
         return res.status(200).json({
             status:"success",
             message:"User registration Succesfull😊"
         })
+        
     },
+
+
+    
+
+  
+
+ 
 
     //->user Login Jwt Web Token
      userLogin: async (req,res)=>{
@@ -54,16 +72,16 @@ module.exports ={
           
         const user = await User.findOne({
          
-             email : email,   
+              email : email,   
           })
          
-          console.log(user.email) 
+      
         
           const Email = user.email
           const user1 = user._id
 
 
-          console.log(user,"halo");
+          // console.log(user,"halo");
           
 
            if(!user){
@@ -587,7 +605,7 @@ module.exports ={
                           //method is used to automatically replace the orders field in the user document with actual order documents
                           const user = await User.findById(userId).populate('orders')
                         
-                          console.log(user,"lll");
+                          // console.log(user,"lll");
 
                           if(!user){
                              return res.status(404).json({

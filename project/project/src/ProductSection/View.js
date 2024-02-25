@@ -52,9 +52,9 @@ const handleAddToCart = async(event)=>{
   
    try{
      const response = await Axios.post(`http://localhost:3000/api/users/${userId}/cart`,{productId:id});
-     console.log(response,"hhh");
+    //  console.log(response,"hhh");
 
-     console.log(response,"oooooo");
+    //  console.log(response,"oooooo");
 
      if(response && response.data && response.data.status === "success"){
            toast.success('Product successfully added to the  cart ')
@@ -66,6 +66,17 @@ const handleAddToCart = async(event)=>{
      console.log('Error adding product to the cart:',error);
      toast.error(error.response ? error.response.data.message:'An error occured')
    }
+}
+
+
+const handleAddToWishlist = (e) => {
+  e.preventDefault()
+  if (userId) {
+    addToWishlist(product._id);
+    toast.success('Product successfully added to wishlist');
+  } else {
+    toast.error('Please login');
+  }
 }
 
 
@@ -221,15 +232,14 @@ const handleAddToCart = async(event)=>{
                   <i class="fas fa-shopping-cart mr-2"></i>
                   Go to Cart</button>
 
-            <button type="submit" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 px-8 py-3 text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" 
-
-                  onClick={()=>
-                  userId ? addToWishlist(product._id): toast.error("please login")
-                  } >
-
-                  <i class="far fa-heart mr-2"></i>
-                 Add to Wishlist
-                  </button>
+                  <button
+        type="submit"
+        class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 px-8 py-3 text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+        onClick={handleAddToWishlist}
+      >
+        <i class="far fa-heart mr-2"></i>
+        Add to Wishlist
+      </button>
 
                  
                 </form>

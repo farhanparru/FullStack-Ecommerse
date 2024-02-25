@@ -8,6 +8,8 @@ const verifyToken = require("../middlewares/userAuthMiddleware")
 
 router    
 .post("/signup",tryCatchMiddleware(userController.userSignup))
+
+
 .post("/login",tryCatchMiddleware(userController.userLogin))
 .get("/allProducts",tryCatchMiddleware(userController.allProducts))
 
