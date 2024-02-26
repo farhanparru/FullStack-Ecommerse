@@ -10,6 +10,8 @@ const ProductWishlist = () => {
   
 
    const [products,setProducts] = useState([])
+   console.log(setProducts,"jj");
+
 
 
 
@@ -17,15 +19,11 @@ const ProductWishlist = () => {
    const fetchWishlist = async ()=>{
      try{
         const response = await Axios.get(`api/users/${userId}/wishlists`)
-   
-
-       
-   
         
         if(response.status === 200){
             setProducts(response.data.date)
 
-            console.log(response.data.date,"lll");
+            
         }
      }catch(error){
         console.log(error);
@@ -40,14 +38,14 @@ const ProductWishlist = () => {
   //remove wishlist
 
   const removeFromWishlist = async(productId)=>{
-    console.log(productId,'kk');
+  
        
     try{
         const response = await Axios.delete(`api/users/${userId}/wishlists`,{
             data:{productId}
         });
 
-    
+        
 
         if(response.status === 200){
              toast.success(response.data.message)
@@ -72,7 +70,9 @@ const ProductWishlist = () => {
                 <div key={index} className="relative overflow-hidden bg-white shadow-md rounded-xl dark:bg-gray-700">
                     <div className="relative overflow-hidden">
                         <div className="mb-5 overflow-hidden">
-                            <img className="object-cover w-full h-60 sm:h-72 hover:scale-105 transition-transform duration-300" src={item.image} alt={item.title} />
+                            <img 
+                            className="object-cover w-full h-60 sm:h-72 hover:scale-105 transition-transform duration-300" 
+                            src={item.image}  />
                         </div>
                         <button className="absolute top-0 left-0 p-3 bg-blue-500 rounded-l-none hover:bg-blue-600 rounded-b-xl">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="text-white" viewBox="0 0 16 16">

@@ -73,7 +73,7 @@ const handleAddToWishlist = (e) => {
   e.preventDefault()
   if (userId) {
     addToWishlist(product._id);
-    toast.success('Product successfully added to wishlist');
+    // toast.success('Product successfully added to wishlist');
   } else {
     toast.error('Please login');
   }
