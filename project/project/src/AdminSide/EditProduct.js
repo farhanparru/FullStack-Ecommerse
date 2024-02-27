@@ -117,7 +117,7 @@ const EditProduct = () => {
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Update product</h2>
       <form onSubmit={handleSubmit} encType='multipart/form-data'>
 
-        <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+        <div className="grid gap-3 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
           <div className="sm:col-span-2">
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
             <input type="text" name="title"  className=" form-control"value={productData.title} onChange={handleChange} />

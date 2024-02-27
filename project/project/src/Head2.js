@@ -5,13 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { PiSignIn } from "react-icons/pi";
 import { FaSignOutAlt } from 'react-icons/fa'
 import { NavLink } from 'react-bootstrap';
-import { BsCart4 } from "react-icons/bs";
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import { BiSearch } from 'react-icons/bi'
 import online from '../src/assets/t Online Shop Free Logo.png'
 import { Axios } from './App';
 import { toast } from 'react-toastify';
+import cart from '../src/assets/Animation  cart.gif'
+import './Head.css'
 
 
 function Head2() {
@@ -61,32 +62,32 @@ function Head2() {
 
   return (
     <div className="relative">
-      <Navbar expand="lg" className='bg-cyan-800 px-4 text-white font-thin'>
+      <Navbar expand="lg" className='bg-cyan-800 px-1 text-white font-thin'>
         <Container>
           <Navbar.Brand href="#" className="brand-name">
-            <img src={online} alt="Logo" style={{ width: '100px', height: 'auto', animation: 'logoAnimation 2s infinite alternate' }} />
+            <img src={online} alt="Logo" style={{ width: '90px', height: 'auto', animation: 'logoAnimation 2s infinite alternate', marginLeft:"-282.5%" }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" className='' />
           <Navbar.Collapse className='w-full flex flex-col gap-2 justify-between items-center md:flex-row '>
-            <div className='flex justify-center md:items-center flex-col md:gap-4 items-start w-full px-4 gap-4 md:flex-row'>
+            <div className='flex justify-center md:items-center flex-col md:gap-4 items-start w-full px-4 gap-3 md:flex-row'>
               <Link to="/"><button className='hover:text-yellow-500 text-opacity-50 border px-3 rounded-lg text-lg text-white'>Home</button></Link>
               <Link to="/laptop"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>Laptops</button></Link>
               <Link to="/Phone"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>Smartphone</button></Link>
               <Link to="/allProducts"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>All Products</button></Link>
             </div>
 
-            <div className='flex justify-between w-full md:w-auto items-center p-4 gap-4'>
+            <div className='flex justify-between w-full md:w-auto items-center p-4 gap-4' style={{gap:"5.5rem!important"}}>
               {isLoggedIn ? (
                 <>
-                  <div className="flex items-center"> {/* Align cart and wishlist icons */}
-                    <BsCart4 onClick={() => Navigate(`/Cart/${userId}`)} className='text-white text-3xl cursor-pointer' title='Cart' />
-                    <Link to="/Wishlist" className="ml-4"> {/* Add margin for spacing */}
-                      <FaRegHeart className="text-3xl cursor-pointer rounded-full text-red-500" title="Wishlist" />
+                  <div className="flex items-center gap-1">
+                    <img onClick={()=> Navigate(`/Cart/${userId}`)} src={cart} title='Cart'></img>
+                    <Link to="/Wishlist" className="ml-4">
+                      <FaRegHeart className="text-3xl cursor-pointer rounded-full text-red-500" title="Wi shlist" />
                     </Link>
                   </div>
-                  <div className="avatar">
-                    <div className="w-10 mt-0 md:mt-4 mask mask-squircle">
-                      <img onClick={handleLogin2} src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?w=740&t=st=1702202454~exp=1702203054~hmac=9912f587eff164dd6dbaf25149db650afc3800927e1f67b62555f6a6d929f2f4" title='Admin' />
+                  <div className="avatar gap-2">
+                    <div className="w-10 mt-0 md:mt-8 mask mask-squircle">
+                    <img onClick={handleLogin2} src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?w=740&t=st=1702202454~exp=1702203054~hmac=9912f587eff164dd6dbaf25149db650afc3800927e1f67b62555f6a6d929f2f4" title='Admin' />
                     </div>
                   </div>
                   <NavLink onClick={handleLogout} className='text-white text-2xl'>

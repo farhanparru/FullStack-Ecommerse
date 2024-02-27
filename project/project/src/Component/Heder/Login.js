@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import loginA from '../../assets/login animation.gif'
 
 import axios from 'axios';
 
@@ -122,7 +123,7 @@ const Login = () => {
       <MDBRow className="justify-content-center">
         <MDBCol md="4">
           <MDBCard>
-           <img src='https://img.freepik.com/free-vector/cloud-computing-security-abstract-concept-illustration_335657-2105.jpg' alt='lapd'/>
+           <img src={loginA} alt='lapd'/>
             <MDBCardBody>
               <MDBInput
                 wrapperClass='mb-4'

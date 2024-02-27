@@ -629,5 +629,56 @@ module.exports ={
                              message:"Ordered Products Details Found",
                              data:orderWithProducts,
                        })
+                      },
+
+
+
+                  cancelOrder:async(req,res)=>{
+                      const orderId = req.params.orderId 
+                      const userId = req.params.userId
+                     
+
+                      try{
+                        const user = await User.findByIdAndUpdate(userId,{$pull:{orders:orderId} },{new:true} )
+                        // console.log(user,"kk");
+
+                        if(!user){
+                           return res.status(404).json({
+                             status:'Failure',
+                             message:"User Not Found"
+                           })
+                        }
+                        const order = await Order.findById(orderId)
+
+                        // console.log(order,"iii");
+
+                        if(!order){
+                          return res.status(404).json({
+                            status:"Failure",
+                            message:"Order Not Found"
+                          })
+                        }
+
+                        if(order.status === 'cancelled'){
+                           return res.status(400).json({
+                             status:"Failure",
+                             message:"Order is already cancelled"
+                           })
+                        }
+
+                        await order.save();
+
+                        await Order.deleteOne({_id:orderId})
+                       
+                        
+                      }catch(error){
+                        console.error('Error cancelling order:',error)
+                        res.status(500).json({
+                           status:"Failure",
+                           message:"Internel Server Error"
+                        })
                       }
+                  }
+ 
+
                   } ;

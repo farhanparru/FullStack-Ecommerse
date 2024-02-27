@@ -7,6 +7,21 @@ import { toast } from "react-toastify";
 const userId = localStorage.getItem('userId')
 
 
+const calculateTax = (subtotal) => {
+  // Assuming tax rate is 10% (0.10)
+  const taxRate = 0.10;
+  const taxAmount = subtotal * taxRate;
+  return taxAmount.toFixed(2);
+};
+
+const calculateShipping = (subtotal) => {
+ // Example: Free shipping for orders over ₹1000, otherwise ₹50 shipping fee
+  if (subtotal > 1000) {
+    return 0; // Free shipping
+  } else {
+    return 50; // ₹50 shipping fee
+  }
+};
 
 
 const Cart = () => {
@@ -106,7 +121,9 @@ const Cart = () => {
     return cartItem.reduce((total,item)=>total + item.productsId.price * item.quantity,0).toFixed(2)
   }
 
-
+  const subtotal = calculateTotal(products);
+  const tax = calculateTax(subtotal);
+  const shipping = calculateShipping(subtotal);
 
      return (
       <div className="container mx-auto px-4 py-8">
@@ -159,14 +176,16 @@ const Cart = () => {
           </span>
         </div>
         <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3" style={{marginLeft:"47vh"}}>
-          <div className="mb-2 flex justify-between">
-            <p className="text-gray-700">Subtotal</p>
-            <p className="text-gray-700">₹129.99</p>
-          </div>
-          <div className="flex justify-between">
-            <p className="text-gray-700">Shipping</p>
-            <p className="text-gray-700">₹4.99</p>
-          </div>
+        <div className="mb-2 flex justify-between">
+  <p className="text-gray-700">Tax</p>
+  <p className="text-gray-700">₹{tax}</p>
+  <i className="fas fa-money-check-alt"></i> {/* Example icon for tax */}
+</div>
+<div className="flex justify-between">
+  <p className="text-gray-700">Shipping</p>
+  <p className="text-gray-700">₹{shipping}</p>
+  <i className="fas fa-shipping-fast"></i> {/* Example icon for shipping */}
+</div>
           <hr className="my-4" />
           <div className="flex justify-between">
             <p className="text-lg font-bold">Subtotal</p>

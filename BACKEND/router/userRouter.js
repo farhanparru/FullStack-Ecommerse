@@ -35,5 +35,6 @@ router
 
 .post("/payment/cansel",tryCatchMiddleware(userController.Cancel))
 .get("/:id/orders",tryCatchMiddleware(userController.orderDetails))
+.post('/:userId/orders/:orderId/cancel',userController.cancelOrder)
 
 module.exports = router
