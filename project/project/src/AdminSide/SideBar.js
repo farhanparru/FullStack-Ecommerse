@@ -30,7 +30,7 @@ const SideBar = () => {
       </CDBSidebarHeader>
       <CDBSidebarContent textColor="#FFFFFF" className="sidebar-content">
         <CDBSidebarMenu>
-          <NavLink to="/addminhome" activeClassName="activeClicked">
+          <NavLink to="/AdminHome" activeClassName="activeClicked">
             <CDBSidebarMenuItem icon="th-large">
               Admin Home
             </CDBSidebarMenuItem>

@@ -28,6 +28,10 @@ import Order from './AdminSide/Order';
 import Oderdata from './Component/Heder/Oderdata';
 import Video from './Component/Heder/ProdcutList/Video';
 import EyeOder from './AdminSide/EyeOder';
+import Profile from './userProfile/Profile';
+import PriceCard from './Component/Heder/ProdcutList/PriceCard';
+import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
+
 
 
   // console.log( process.env.REACT_APP_API_URL,"hai");
@@ -155,13 +159,16 @@ import EyeOder from './AdminSide/EyeOder';
           <Route path='/Order/:id' element={<Order/>}/>
           <Route path='/viewOder' element={<Oderdata/>}/>
           <Route path='/EyeOder/:id' element={<EyeOder/>}/>
+          <Route path='/Profile' element={<Profile/>}/>
+         
         </Routes>
         {
         ijdsk&&
           <>
         <Brand/>
        <Video/>
-       
+       <PriceCard/>
+       <OfferCrad/>
         
         
         </>

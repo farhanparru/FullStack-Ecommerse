@@ -22,7 +22,7 @@ const EyeOder = () => {
 
             const response = await Axios.get(`http://localhost:3000/api/admin/viewOrder/${id}`)
            
-        //   console.log(response,"kkk");
+         
 
             if(response.status === 200){
                 setEyeProducts(response.data.orders.products)

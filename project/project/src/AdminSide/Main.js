@@ -1,25 +1,24 @@
-import React from 'react'
-// import AdminNavbar from './AdminNavabar'
-import SideBar from './SideBar'
+import React from 'react';
+import SideBar from './SideBar';
 
 const Main = () => {
   return (
     <div>
-       <div >
-       {/* <AdminNavbar/> */}
-       <SideBar/>
-        <div className="col-md-4">
-       
+      <div className="row">
+        <div className="col-md-1" style={{ marginTop: '-870px' }}>
+          <SideBar />
+        </div>
+        <div className="col-md-10">
+          <div className="row">
+            <div className="col-md-8">
+            </div>
+            <div className="col-md-4">
+            </div>
           </div>
         </div>
-        <div className="col-md-4">
-          
-          </div>
-        </div>
-       
-      
-    
-  )
+      </div>
+    </div>
+  );
 }
 
-export default Main
+export default Main;

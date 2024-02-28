@@ -61,4 +61,8 @@
     animation: fadeIn 1s ease-in-out forwards;
   }
   
+  .Video-bg {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
   

@@ -125,7 +125,7 @@ const Signup = () => {
           />
 
           {erorr && (
-            <div role="alert" className="text-red-500 text-xs">
+            <div role="alert" className="text-red-500 text-lg">
               {erorr}
             </div>
           )}
@@ -141,13 +141,14 @@ const Signup = () => {
           />
 
         
-            <button
-              type="submit"
-              className="w-full text-center py-3 rounded bg-green-500 text-white hover:bg-green-700 focus:outline-none my-1"
-              onClick={handleSignup}
-            >
-              Create Account
-            </button>
+<button
+    type="submit"
+    className="bg-cyan-500 shadow-lg shadow-cyan-500/50 full-rounded w-full text-white py-2 px-4"
+    onClick={handleSignup}
+>
+    Create Account
+</button>
+
          
 
           <div className="text-center text-sm text-grey-dark mt-4">

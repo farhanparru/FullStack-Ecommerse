@@ -13,6 +13,7 @@ import { Axios } from './App';
 import { toast } from 'react-toastify';
 import cart from '../src/assets/Animation  cart.gif'
 import './Head.css'
+import Avtar from '../src/assets/avtar admin.png'
 
 
 function Head2() {
@@ -100,7 +101,7 @@ function Head2() {
                 </>
               )}
             </div>
-
+          
 
             <form className="absolute top-full left-0 max-w-md mx-auto w-full md:w-auto relative">
         <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -119,6 +120,10 @@ function Head2() {
           />
         </div>
       </form>
+      <div className='flex items-center ml-4'>
+ <Link to="/Profile"><img src={Avtar} style={{ width: '81px', height: '40px', borderRadius: '10px', border: '4px solid #000' }} alt="Avatar Image" /></Link> 
+</div>
+
 
 
           </Navbar.Collapse>

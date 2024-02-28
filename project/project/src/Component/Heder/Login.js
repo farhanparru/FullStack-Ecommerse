@@ -145,10 +145,10 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
 
-              {error && <div className="text-danger mb-3">{error}</div>}
+              {error && <div className="text-danger mb-3 text-lg">{error}</div>}
 
               <div className='text-center text-md-start mt-4 pt-2'>
-                <Button className="mb-4 px-5" onClick={handleLogin}>Login</Button>
+                <Button className="bg-cyan-500 shadow-lg shadow-cyan-500/500  w-32 " onClick={handleLogin}>Login</Button>
 
                 <p className="small fw-bold mt-2 pt-1 mb-2">
                   Don't have an account? <a href="#!" className="link-danger" onClick={()=> handleNavigation('/signup')}>Register</a>

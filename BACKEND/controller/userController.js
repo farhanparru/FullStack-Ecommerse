@@ -337,44 +337,6 @@ module.exports ={
               
            
 
-             
-
-              // removeCartProduct: async(req,res)=>{
-              //    const userId = req.params.id
-                
-              //    const itemId =req.params.itemId 
-              //    console.log(itemId,"eeee");
-                 
-              //    if(!itemId){
-              //      return res.status(404).json({message:"Product not found"})
-              //    }
-              //    const user = await User.findById(userId)
-              //   //  console.log(user,"ttt");
-
-              //    if(!user){
-              //      res.status(404).json({message:"User Note found"})
-              //    }
-
-              //    const result = await User.updateOne(
-                  
-              //      {_id:userId},
-              //      {$pull:{cart:{cart:itemId}}}
-              //    );
-               
-              //   //  console.log(result,"PP");
-
-              //    if(result.modifiedCount > 0){
-              //      console.log('item removed successfully');
-              //      res.status(200).json({message:"Product removed successfully",data,result})
-              //    }else{
-              //      console.log('Item not found in the cart');
-              //    }
-
-              // },
-
-
-
-
                  //-> Add Product to Wish list
 
                  addToWishlist:async(req,res)=>{
