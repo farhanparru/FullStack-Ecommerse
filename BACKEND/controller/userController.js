@@ -5,84 +5,148 @@ const Order = require('../models/orderSchema')
 const { joiUserSchema } = require("../models/validationSchema")
 const bcrypt=require("bcrypt")
 const jwt = require("jsonwebtoken") //Json Web Token Security puropsse
-const {default:mongoose, Error}= require("mongoose") //ES6 Module syntex default Commmon js 
-const {json} = require('body-parser')
+const OTP = require('../models/otpModel')
+const otpGenerator =require('otp-generator')
+const crypto = require('crypto')
+const nodemailer = require("nodemailer")
+
 const  stripe = require("stripe")(process.env. STRIPE_SECRET_KEY);
-const nodemailer = require('nodemailer')
-// console.log(process.env.STRIPE_SECRET_KEY,"hhs");
 let sValue = []
 
 
-   //for verifyi email
 
+
+  //->  email configuration
+
+  const transporter =  nodemailer.createTransport({
+     service:"gmail",
+     auth:{
+        user:"shaminmuhammad116@gmail.com",
+        pass:"uoygfeypjmdobbek"
+     }
+  })
 
 
  
 module.exports ={
+
+
+
     //->new User Register
-    userSignup:async(req,res)=>{
-      console.log("re",req.body)
-       
-        const {value,error} = joiUserSchema.validate(req.body)
-        const {email,username,password,confirom}=req.body;
-        if(error){
-           return res.status(400).json({ 
-                status:"Error",
-                message:"Invalid user input ☹️. Please check your data. 🙂"
-            })
+    userSignup: async (req, res) => {
+      const { value, error } = joiUserSchema.validate(req.body);
+      const { email, username, password, confirm } = req.body;
+     
+    
+      const checkUsrePresent = await User.findOne({email})
+      if(checkUsrePresent){
+          return res.status(401).json({
+              success:false,
+              message:"User is already login Valid email"
+          })
         }
-      const user =   await User.create({
-       
-            email:email,
-            username:username,
-            password:password,
-            confirom:confirom
-        })
-       
-        
+
+      if (error) {
+        return res.status(400).json({
+          status: "Error",
+          message: "Invalid user input ☹️. Please check your data. 🙂"
+        });
+      }
+    
+      try {
+        // Check if User already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+          return res.status(400).json({
+            success: false,
+            message: "User already exists"
+          });
+        }
+
 
       
+        // Create new User
+        const newUser = await User.create({
+          email: email,
+          username: username,
+          password: password,
+          confirm: confirm,
+         
+       
+        });
 
+   
+    
         return res.status(200).json({
-            status:"success",
-            message:"User registration Succesfull😊"
-        })
-        
+          status: "success",
+          message: "User registration successful 😊"
+        });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          status: "Error",
+          message: "Internal Server Error"
+        });
+      }
     },
-
-
     
 
-  
 
- 
+signupData:async(req,res)=>{
+
+  try{
+    const userData = {
+       name:req.body.username,
+       email:req.body.email
+
+    }
+    res.status(200).json(userData)
+  }catch(error){
+    res.status(500).json({message:error.message})
+  }
+
+},
+
 
     //->user Login Jwt Web Token
      userLogin: async (req,res)=>{
-      console.log(req.body)
-       
-          // const {value,error} = joiUserSchema.validate(req.body) 
-        
-          // if(error){
-          //     res.json(error.message)
-              
-          // }
 
-        const {email,password} = req.body 
+     const {email,password} = req.body 
+    
+
+      // check a user alredy login 
+     
+        //otp generate code
+
+        // let otp = otpGenerator.generate(6,{
+        //   upperCaseAlphabets:false,
+        //   lowerCaseAlphabets:false,
+        //   specialChars:false, 
+        // })
+    
+        // let result =  await OTP.findOne({otp:otp})
+        // while(result){
+        //   otp = otpGenerator.generate(6,{
+        //      upperCaseAlphabets:false,
+        //   })
+        //   result = await OTP.findOne({otp:otp})
+        // }
+
+        // const otpPayload = {email,otp}
+        // const otpBody = await OTP.create(otpPayload);
+
+       
           
         const user = await User.findOne({
-         
-              email : email,   
+          email : email,   
           })
+
+          console.log(user,"user");
+
+          
          
-      
-        
           const Email = user.email
           const user1 = user._id
-
-
-          // console.log(user,"halo");
-          
 
            if(!user){
             return res.status(404).json({
@@ -90,6 +154,12 @@ module.exports ={
                 message:"User not fount 🧐"
             })
           }
+
+        //check user  
+          if (!user.isActive) {
+            return res.status(403).json({ error: "User account has been blocked. Please contact the administrator." });
+        }
+
           if(!password || !user.password){
               return res  
               .status(401)
@@ -97,7 +167,7 @@ module.exports ={
              
           }
             const passwordCheck = await bcrypt.compare(password,user.password); 
-            console.log(passwordCheck);
+          
             if(!passwordCheck){
              
                 return res
@@ -119,16 +189,194 @@ module.exports ={
                 .status(200)
                 .json({
                   status:"succes",
-                  message:"Login SuccessFull",
+                  message:"Login Successful. OTP sent to your email.",
                    data: token,
                    Email:Email, 
                    userId:user1
                   })
-           },
+             },
+
+
+
+           
+    // -> send Email link for reset Password    
+
+    sendpasswordlink: async (req, res) => {
+      try {
+          const { email } = req.body;
+       
+          if(!email){
+            res.status(401).json({status:401,message:"Enter Your Email"})
+          }
+    
+          const userfind = await User.findOne({email:email})
+
+           //-> token generate reset password
+
+           const token = jwt.sign({_id:userfind._id},process.env.USER_ACCES_TOKEN_SECRET,{
+               expiresIn : "150s"
+           })
+
+            const setUserToken = await User.findByIdAndUpdate({_id:userfind._id},{verifytoken:token},{new:true});
+           
+             if(setUserToken){
+               const mailOptions ={
+                 from:"shaminmuhammad116@gmail.com",
+                 to:email,
+                 subject:"Sending Email For password Reset",
+                 text:`This Link  Valid For 2 MINUTES http://localhost:3001/forgotpassword/${userfind.id}/${setUserToken.verifytoken}`
+               }
+               transporter.sendMail(mailOptions,(error,info)=>{
+                   if(error){
+                     console.log('error',error);
+                     res.status(401).json({status:401,message:"email not send"})
+                   }else{
+                     console.log("Email send",info.response);
+                     res.status(201).json({status:201,message:"Email sent Successfully"})
+                   }
+               })
+
+             }  
+          res.status(201).json({ message: "Password reset link sent successfully" });
+        } catch (error) {
+         res.status(401).json({status:401,message:"Invalid user"})
+      }
+  },
+
+
+    // verifyi user forgotPassword time
+
+    forgotpassword:async(req,res)=>{
+       const {id,token} = req.params;
+       
+       try{
+         const validUser = await User.findOne({_id:id,verifytoken:token})
+          
+         const  verifyToken = jwt.verify(token,process.env.USER_ACCES_TOKEN_SECRET);
+
+        //  console.log(verifyToken,"verifyToken");
+
+         if(validUser && verifyToken._id){
+            res.status(201).json({status:201,validUser})
+         }else{
+           res.status(401).json({status:401,message:"user not exist"})
+         }
+       }catch(error){
+          res.status(401).json({status:401,error})
+       }
+       
+    },
+
+    //-> change password
+
+    changePassword:async(req,res)=>{
+       const {id,token} = req.params;
+
+       const {password} = req.body;
+
+       try{
+         const validUser = await User.findOne({_id:id,verifytoken:token}) 
+
+         const verifyToken = jwt.verify(token,process.env.USER_ACCES_TOKEN_SECRET)
+
+         if(validUser && verifyToken._id){
+
+          const newpassword = await bcrypt.hash(password,12)
+
+          const  setnewuserpass = await User.findByIdAndUpdate({_id:id},{password:newpassword})
+          setnewuserpass.save()
+
+          res.status(201).json({status:201,setnewuserpass})
+         }else{
+           res.status(401).json({status:401,message:"user not exist"})
+         }
+
+       }catch(error){
+         res.status(401).json({status:401,error})
+       }
+    },
+
+  
+  
+
+    
+        //verifyi Otp`
+           
+         verifyiOtp : async (req, res) => {
+        try{
+          const {email,otp}= req.body
+       
+          //Find the Otp  record for the given email and otp
+          const otpRecord = await OTP.findOne({email,otp})
+         if(!otpRecord){
+           return res.status(401).json({error:"error",message:"Invalid Otp"})
+         }
+
+         const user = await User.findOne({email})
+
+         if(!user){
+           return res.status(404).json({status:"error",message:'user Note found'})
+         }
+
+        
+
+       
+
+         res.status(200).json({
+          status:"success",
+          message:"Login Successfully",
+          userId:user._id
+         })
+
+        }catch(error){
+          console.log(error);
+          res.status(500).json({error:"error",message:"Intrenel server error"})
+        
+        }
+       
+      },
+
+
+
+      //->verifayi user login
+
+
+      verifayiUser:async(req,res)=>{
+       try{
+         const {email,password}=req.body
+
+         const user = await User.findOne({email})
+      
+        if(!user){
+          return res.status(404).json({error:'user note found'})
+        }
+
+        //if user is blocked send error response         
+        if (!user || !user.isActive) {
+          return res.status(403).json({ error: 'Your account has been blocked. Please contact the administrator.' });
+        }
+    
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+      
+
+        if(!isPasswordValid){
+          return res.status(401).json({error:"Inavalid email or password"})
+        }
+
+        const token = jwt.sign({ userId: user._id }, process.env.USER_ACCES_TOKEN_SECRET, { expiresIn: '1h' });
+  ;
+    // Send success response with token
+    res.status(200).json({ message: 'User authenticated successfully', token });
+  } catch (error) {
+
+       }
+      },
+
+
+
+
 
        //->AllProducts
-
-
        allProducts:async(req,res)=>{
          const products = await  product.find()
          if(!products){
@@ -238,7 +486,7 @@ module.exports ={
                     message: "Product successfully added to cart",
                 });
             } catch (error) {
-                console.error(error);
+                console.error(error);    
                 res.status(500).send({
                     status: "Error",
                     message: "Internal Server Error",
@@ -296,7 +544,7 @@ module.exports ={
                   }
                   const cartItem = user.cart.id(id)
 
-                  console.log(cartItem,"kkkk");
+               
                   
                   if (!cartItem) { 
                     return res.status(404).json({ message: 'Cart item not found' }) 
@@ -640,7 +888,11 @@ module.exports ={
                            message:"Internel Server Error"
                         })
                       }
-                  }
+                  },
+
+                   updateUsreProfile:(req,res)=>{
+                        
+                   } 
  
 
                   } ;

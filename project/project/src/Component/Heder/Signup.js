@@ -3,17 +3,24 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 
 const Signup = () => {
+
+
+
+
+
 
   
   const Navigate = useNavigate()
   const userNameRef = useRef(null)
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
-  const confiromRef =useRef(null)
+  const confirmRef =useRef(null)
 
  
  
@@ -23,7 +30,12 @@ const Signup = () => {
   const [Password, setPassword] = useState('');
   const [erorr, setErorr] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword,setShowPassword] = useState(false)
 
+
+  const togglePasswordVisblity = ()=>{
+    setShowPassword(!showPassword)
+  }
 
  
   const handleSignup = async(e) => {
@@ -33,10 +45,14 @@ const Signup = () => {
     const username = userNameRef.current.value;
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    const confirom = confiromRef.current.value
+    const confirm = confirmRef.current.value
 
     try{
-   const payload = {email,username,password,confirom};
+   const payload = {email,username,password,confirm};
+
+   //check user alredy exists
+
+
    const response = await axios.post(
     "http://localhost:3000/api/users/signup",payload);
     
@@ -46,9 +62,14 @@ const Signup = () => {
         toast.success('Signup successful!');
        
       }
-      console.log(response)
      
-    
+   const userExist = response.data.email
+   if(userExist){
+    toast.error('User already exists');
+      return;
+   }
+
+     
     } catch(error){
       console.log(error);
     }
@@ -113,22 +134,25 @@ const Signup = () => {
             onChange={(e) => setEmail(e.target.value)}
             ref={emailRef}
           />
-
-          <input
-            type="password"
-            className="block border border-grey-light w-full p-3 rounded mb-4"
-            name="password"
-            placeholder="Password"
-            value={Password}
-            onChange={(e) => setPassword(e.target.value)}
-            ref={passwordRef}
-          />
-
-          {erorr && (
-            <div role="alert" className="text-red-500 text-lg">
-              {erorr}
+<div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'} // Conditionally render input type based on showPassword state
+              className="block border border-grey-light w-full p-3 rounded mb-4 pr-10" // Added pr-10 for padding right to accommodate the icon
+              name="password"
+              placeholder="Password"
+              value={Password}
+              onChange={(e) => setPassword(e.target.value)}
+              ref={passwordRef}
+            />
+            {/* Icon for toggling password visibility */}
+            <div
+              className="absolute top-0 right-0 h-full flex items-center mr-4 cursor-pointer"
+              onClick={togglePasswordVisblity}
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </div>
-          )}
+          </div>
+
 
           <input
             type="password"
@@ -137,8 +161,14 @@ const Signup = () => {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            ref={confiromRef}
+            ref={confirmRef}
           />
+
+{erorr && (
+            <div role="alert" className="text-red-500 text-lg">
+              {erorr}
+            </div>
+          )}
 
         
 <button

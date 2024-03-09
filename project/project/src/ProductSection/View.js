@@ -113,12 +113,12 @@ const handleAddToWishlist = (e) => {
                 
             </div>
             <div class="sm:col-span-8 lg:col-span-7">
-              <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">${product.Price}</h2>
+              <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">Price:₹{product.price}</h2>
 
               <section aria-labelledby="information-heading" class="mt-2">
                 <h3 id="information-heading" class="sr-only">Product information</h3>
 
-                <p class="text-2xl text-gray-900">OldPrice:${product.OldPrice}</p>
+                <del class="text-2xl text-gray-900">OldPrice:₹{product.OldPrice}</del>
 
               
                 <div class="mt-6">

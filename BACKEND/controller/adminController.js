@@ -11,7 +11,7 @@ module.exports={
 
     login: async(req,res)=>{
         const {email,password} = req.body;
-        // console.log(req.body,'ggg')
+      
     
         if(
             email === process.env.ADMIN_EMAIL  &&
@@ -56,9 +56,32 @@ module.exports={
              data: allUsers,
            });
          },
+
+        
+         //-> user Block or unblock    
+          userBlock:async (req, res) => {
+          try {
+            const userId = req.body.userId;
+            const user = await UserSchema.findById(userId);
+            
+            if (!user) {
+              return res.status(404).json({ error: "User not found" });
+            }
+            
+            user.isActive = !user.isActive;
+            await user.save();
+            
+            res.status(200).json({ message: "User status updated successfully", isActive: user.isActive });
+          } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Internal server error" });
+          }
+        },
+      
+
       //->View a specific user details by id
 
-      useById: async (req,res)=>{
+      userById: async (req,res)=>{
          const userId = req.params.id;
          const user = await UserSchema.findById(userId)
          console.log(user);
@@ -95,7 +118,7 @@ module.exports={
                  
 
           } = req.body ;
-              //  console.log(req.body);
+               console.log(image);  
           const data = await productSchema.create ({
             title ,
             description,
@@ -244,7 +267,7 @@ module.exports={
             id
            }=req.body
 
-         console.log(req.body);
+         console.log(image);
 
 
          const product = await productSchema.findById(id);

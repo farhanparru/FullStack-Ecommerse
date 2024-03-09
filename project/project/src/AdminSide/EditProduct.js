@@ -65,6 +65,8 @@ const EditProduct = () => {
           BatteryBackup
         })
 
+        console.log(productData);
+
        }
     }catch(error){
       console.error('Error fething product data',error);

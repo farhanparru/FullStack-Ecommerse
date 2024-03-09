@@ -50,7 +50,7 @@ const Laptop = () => {
    }
 
 
-
+  
 
 
   return (
@@ -63,8 +63,8 @@ const Laptop = () => {
           <div className="card-body p-4">
             <h2 className="card-title text-xl font-semibold">{item.title}</h2>
             <h2 className="card-title text-xl font-semibold">{item.category}</h2>
-            <del><span className="font-bold text-gray-500">${item.OldPrice}</span></del>
-            <p className='font-bold text-green-500'>${item.price}</p>
+            <del><span className="font-bold text-gray-500">₹{item.OldPrice}</span></del>
+            <p className='font-bold text-green-500'>₹{item.price}</p>
        
             <div className="card-actions justify-end mt-4">
             <div className="rating rating-lg">

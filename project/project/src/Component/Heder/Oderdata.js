@@ -40,7 +40,7 @@ const OrderData = () => {
         <table style={{ borderCollapse: 'collapse', width: '100%' ,marginBottom:"129vh"}}>
           <thead>
             <tr style={{ borderBottom: '1px solid #ddd' }}>
-              <th style={{ padding: '8px', textAlign: 'left', width: '10%' }}><FaCalendarAlt/> Product ID</th>
+           
               <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaClock/> Date</th>
               <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaCreditCard/> Payment ID</th>
               <th style={{ padding: '8px', textAlign: 'left', width: '20%' }}><FaMoneyBillAlt/> Total</th>
@@ -50,7 +50,7 @@ const OrderData = () => {
           <tbody>
             {data.map((product) => (
               <tr key={product._id} style={{ borderBottom: '1px solid #ddd' }}>
-                <td style={{ padding: '8px' }}>{product._id}</td>
+             
                 <td style={{ padding: '8px' }}>{product.date}</td>
                 <td style={{ padding: '8px' }}>{product.payment_id}</td>
                 <td style={{ padding: '8px' }}>{product.total_amount}</td>

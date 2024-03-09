@@ -8,12 +8,12 @@ import { NavLink } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegHeart } from 'react-icons/fa';
 import { BiSearch } from 'react-icons/bi'
-import online from '../src/assets/t Online Shop Free Logo.png'
 import { Axios } from './App';
 import { toast } from 'react-toastify';
 import cart from '../src/assets/Animation  cart.gif'
 import './Head.css'
 import Avtar from '../src/assets/avtar admin.png'
+import Brand from '../src/assets/logo brand.png'
 
 
 function Head2() {
@@ -66,7 +66,7 @@ function Head2() {
       <Navbar expand="lg" className='bg-cyan-800 px-1 text-white font-thin'>
         <Container>
           <Navbar.Brand href="#" className="brand-name">
-            <img src={online} alt="Logo" style={{ width: '90px', height: 'auto', animation: 'logoAnimation 2s infinite alternate', marginLeft:"-282.5%" }} />
+            <img src={Brand} alt="Logo" style={{ width: '90px', height: 'auto', animation: 'logoAnimation 2s infinite alternate', marginLeft:"-282.5%" }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" className='' />
           <Navbar.Collapse className='w-full flex flex-col gap-2 justify-between items-center md:flex-row '>
@@ -109,6 +109,8 @@ function Head2() {
           <div className="flex-shrink-0 p-3">
             <BiSearch className="w-6 h-6 text-gray-500 dark:text-gray-400" />
           </div>
+
+
           <input
             type="search"
             id="searchInput"
@@ -116,14 +118,26 @@ function Head2() {
             placeholder="Search items..."
             aria-label='Search'
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+            onChange={(e) => setSearchTerm(e.target.value)} />
+     
         </div>
       </form>
-      <div className='flex items-center ml-4'>
- <Link to="/Profile"><img src={Avtar} style={{ width: '81px', height: '40px', borderRadius: '10px', border: '4px solid #000' }} alt="Avatar Image" /></Link> 
+      <div className="ml-auto">
+    <Link to="/Profile">
+        <img 
+            src={Avtar} 
+            alt="Profile" 
+            title="Profile" 
+            style={{ 
+                width: '88px', 
+                height: '50px', 
+                borderRadius: '25px' // half of the height for a rounded shape
+            }} 
+        />
+    </Link>
 </div>
 
+   
 
 
           </Navbar.Collapse>
@@ -132,11 +146,11 @@ function Head2() {
 
   
       {searchTerm && (
-        <div className='search-results absolute top-full left-0 bg-white border border-gray-300 rounded-b-md shadow-md'>
+        <div className='search-results absolute flex flex-wrap top-full left-0 justify-center items-center gap-3 backdrop-blur-xl border border-gray-300 rounded-b-md p-2 z-[999] w-full h-fit   oveshadow-md'>
           {searchResults.map((product) => (
-            <div className='product-item' key={product._id}>
-              <img src={product.image} alt={product.title} />
-              <h3>{product.title}</h3>
+            <div className='product-item overflow-hidden p-3 rounded border border-black h-96 ' key={product._id}>
+              <img src={product.image} alt={product.title} className='w-52 h-52' />
+              <h3 className='text-xl'>{product.title}</h3>
               <p>Price: {product.price}</p>
               {product.oldPrice && <p>Old Price: {product.oldPrice}</p>}
               <button onClick={() => { Navigate(`/View/${product._id}`); setSearchTerm(""); }}>View Details</button>

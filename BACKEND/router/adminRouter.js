@@ -12,7 +12,8 @@ router
 .post("/login",tryCatchMiddleware(admin.login))
 
 
-// apk middleware  start
+// apk middleware  star
+
 
 
 
@@ -20,7 +21,9 @@ router
 
 
 .get("/users",tryCatchMiddleware(admin.allUsers))
-.get("/user/:id",tryCatchMiddleware(admin.useById))
+.get("/user/:id",tryCatchMiddleware(admin.userById))
+
+.post('/user/block',tryCatchMiddleware(admin.userBlock))
 
 .post("/products",imageUpload, tryCatchMiddleware(admin.creatProduct))
 .get("/products",tryCatchMiddleware(admin.allProducts))
@@ -28,7 +31,7 @@ router
 .get("/products/:id",tryCatchMiddleware(admin.productsById))
 .delete("/products",tryCatchMiddleware(admin.delteProduct))
 
-.put("/products",tryCatchMiddleware(admin.updateProduct))
+.put("/products",imageUpload,tryCatchMiddleware(admin.updateProduct))
 
 .get("/orders",tryCatchMiddleware(admin.orderDetials))
 

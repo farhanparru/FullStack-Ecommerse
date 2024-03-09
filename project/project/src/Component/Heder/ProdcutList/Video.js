@@ -5,7 +5,7 @@ import  video  from '../../../assets/last.mp4';
 
 const Video = () => {
   return (
-    <div className='landingpage'>
+    <div className='landingpage' style={{margin:"14px"}}>
       <video src={video} autoPlay muted loop className="Video-bg" />
       <div className='bg-overlay'></div>
       <div className='navbar'></div>

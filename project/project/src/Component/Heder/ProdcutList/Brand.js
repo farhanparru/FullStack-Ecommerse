@@ -1,6 +1,7 @@
 
 import React from 'react'
 import './Brand.css'
+import HomeProduct from '../../../ProductSection/HomeProduct'
 const Brand = () => {
   return (
     <div>
@@ -162,6 +163,8 @@ const Brand = () => {
     {/* <img width="24" height="24" src="https://assets.codepen.io/162656/george-martsoukos-small-logo.svg" alt="George Martsoukos logo"> */}
   </a>
 </footer>
+
+<HomeProduct/>
     </div>
   )
 }

@@ -118,9 +118,9 @@ const Productlist = () => {
                     </div>
                     <div className="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
                       <div className="d-flex flex-row align-items-center mb-1">
-                        <h4 className="mb-1 me-1">${item.price}</h4>
+                        <h4 className="mb-1 me-1">₹{item.price}</h4>
                         <span className="text-danger">
-                          <s>${item.OldPrice}</s>
+                          <s>₹{item.OldPrice}</s>
                         </span>
                       </div>
                       <h6 className="text-success">Free shipping</h6>

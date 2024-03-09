@@ -35,7 +35,7 @@ const SideBar = () => {
               Admin Home
             </CDBSidebarMenuItem>
           </NavLink>
-          <NavLink to="/user" activeClassName="activeClicked">
+          <NavLink to="/user/Block" activeClassName="activeClicked">
             <CDBSidebarMenuItem icon="users">Users</CDBSidebarMenuItem>
           </NavLink>
           <NavLink to="/viewOder" activeClassName="activeClicked">

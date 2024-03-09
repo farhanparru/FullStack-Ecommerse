@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import profile from '../assets/profile usre.png';
+
+
+const userEmail = localStorage.getItem('email');
+
 
 const Profile = () => {
+
+  const { user } = useSelector((state) => state.user || { user: null });
+
+   // Handle initial undefined state
+
+
+  const [showEditProfile,setShowEditProfile] = useState(false)
+  const toggleEditProfile = () =>{
+    setShowEditProfile(!showEditProfile)
+  }
+  
+
   return (
-    <section style={{ backgroundColor: '#eee' }}>
-      <div className="container py-5">
+    <section style={{ backgroundColor: '#eee', textAlign: 'center', padding: '50px' }}>
+      <div className="container">
         <div className="row">
           <div className="col">
             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
@@ -20,39 +39,42 @@ const Profile = () => {
           <div className="col-lg-4">
             <div className="card mb-4">
               <div className="card-body text-center">
-                <img src="" alt="avatar" className="rounded-circle img-fluid" style={{ width: '150px' }} />
-                <h5 className="my-3">John Smith</h5>
+                <img src={profile} alt="user" className="rounded-circle img-fluid mx-9" style={{ width: '150px' }} />
+                <h5 className="my-3">Frahan</h5>
                 <p className="text-muted mb-1">Full Stack Developer</p>
                 <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <button type="button" className="btn btn-primary"></button>
-                  <button type="button" className="btn btn-outline-primary ms-1"></button>
-                </div>
               </div>
             </div>
             <div className="card mb-4 mb-lg-0">
               <div className="card-body p-0">
                 <ul className="list-group list-group-flush rounded-3">
                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fas fa-globe fa-lg text-warning"></i>
-                    <p className="mb-0">https://mdbootstrap.com</p>
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-home fa-lg me-2" style={{ color: '#333333' }}></i>
+                      <p className="mb-0">Home</p>
+                    </div>
+                  </li>
+
+                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-shopping-cart fa-lg me-2" style={{ color: '#333333' }}></i>
+                      <p className="mb-0">My Orders</p>
+                    </div>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fab fa-github fa-lg" style={{ color: '#333333' }}></i>
-                    <p className="mb-0">mdbootstrap</p>
+                    <div className="d-flex align-items-center">
+                      <i className="far fa-envelope fa-lg fa-lg me-2" style={{ color: '#333333' }}></i>
+                      <p className="mb-0">My Cart</p>
+                    </div>
                   </li>
+
                   <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fab fa-twitter fa-lg" style={{ color: '#55acee' }}></i>
-                    <p className="mb-0">@mdbootstrap</p>
+                    <div className="d-flex align-items-center">
+                      <i className="fas fa-phone-alt fa-lg" style={{ color: '#333333' }}></i>
+                      <p className="mb-0">Edit profile</p>
+                    </div>
                   </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fab fa-instagram fa-lg" style={{ color: '#ac2bac' }}></i>
-                    <p className="mb-0">mdbootstrap</p>
-                  </li>
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fab fa-facebook-f fa-lg" style={{ color: '#3b5998' }}></i>
-                    <p className="mb-0">mdbootstrap</p>
-                  </li>
+                 
                 </ul>
               </div>
             </div>
@@ -60,112 +82,122 @@ const Profile = () => {
           <div className="col-lg-8">
             <div className="card mb-4">
               <div className="card-body">
-                <div className="row">
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Full Name</p>
+                    <label htmlFor="fullName">Full Name</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="text" id="fullName" className="form-control" placeholder='Enter a full Name' name={user?.username ||"_"} />
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
+  <div className="col-sm-3">
+    <label htmlFor="email">Email</label>
+  </div>
+  <div className="col-sm-9">
+    <p className="text-left">{userEmail}</p> 
+  </div>
+</div>
+
+
+
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Email</p>
+                    <label htmlFor="phone">Phone</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="tel" id="phone" className="form-control" placeholder='Enter Mobile Number' name={user?.phone} />
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Phone</p>
+                    <label htmlFor="address">Address</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="text" id="address" className="form-control"placeholder='Enter Address'  />
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Mobile</p>
+                    <label htmlFor="country">Country</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <select id="country" className="form-select"  >
+                      <option value="">Select Country</option>
+                      <option value="India">India</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="Canada">Canada</option>
+                      {/* Add more options as needed */}
+                    </select>
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Address</p>
+                    <label htmlFor="state">State</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <select id="state" className="form-select" >
+                      <option value="">Select State</option>
+                      <option value="Kerala">Kerala</option>
+                      <option value="Goa">Goa</option>
+                      <option value="Assam">Assam</option>
+                      {/* Add more options as needed */}
+                    </select>
                   </div>
                 </div>
-                <hr />
-               
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">Country</p>
+                    <label htmlFor="district">District</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="text" id="district" className="form-control" placeholder='Enter District'  />
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">State</p>
+                    <label htmlFor="city">City</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="text" id="city" className="form-control" placeholder='Enter City'   />
                   </div>
                 </div>
-                <hr />
-                <div className="row">
+
+                <div className="row mb-3">
                   <div className="col-sm-3">
-                    <p className="mb-0">District</p>
+                    <label htmlFor="pincode">Pincode</label>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                    <input type="text" id="pincode" className="form-control" placeholder='Enter Pincode'  />
                   </div>
                 </div>
-                <hr />
+
                 <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">City</p>
-                  </div>
-                  <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Pincode</p>
-                  </div>
-                  <div className="col-sm-9">
-                    <p className="text-muted mb-0"></p>
+                  <div className="col">
+                    <button type="button" className="btn btn-primary" >Submit</button>
                   </div>
                 </div>
               </div>
             </div>
+            {/* Additional cards */}
             <div className="row">
               <div className="col-md-6">
                 <div className="card mb-4 mb-md-0">
                   <div className="card-body">
-                    <p className="mb-4"><span className="text-primary font-italic me-1">assignment</span> Project Status</p>
-                    {/* Progress bars */}
+                    {/* Additional content */}
                   </div>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="card mb-4 mb-md-0">
                   <div className="card-body">
-                    <p className="mb-4"><span className="text-primary font-italic me-1">assignment</span> Project Status</p>
-               
+                    {/* Additional content */}
                   </div>
                 </div>
               </div>
@@ -175,6 +207,6 @@ const Profile = () => {
       </div>
     </section>
   );
-}
+};
 
 export default Profile;

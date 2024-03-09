@@ -13,7 +13,7 @@ useEffect(()=>{
   const fetchProducts = async()=>{
     try{
         const response = await Axios.get('/api/users/allProducts')
-        console.log(response,"kkk");
+       
         if(response.status === 200){
             setProducts(response.data.data)
         }
@@ -40,8 +40,8 @@ useEffect(()=>{
           </figure>
           <div className="card-body p-4">
             <h2 className="card-title text-xl font-semibold">{item.title}</h2>
-            <del><span className="font-bold text-gray-500">${item.OldPrice}</span></del>
-            <p className='font-bold text-green-500'>${item.price}</p>
+            <del><span className="font-bold text-gray-500">₹{item.OldPrice}</span></del>
+            <p className='font-bold text-green-500'>₹{item.price}</p>
   
             <div className="card-actions justify-between mt-4">
               <div className="rating rating-lg">

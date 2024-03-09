@@ -1,23 +1,22 @@
-  import { Route, Routes, useLocation } from 'react-router-dom';
-  import { createContext, useEffect, useState } from 'react';
-  import Head2 from './Head2';
-  import Footer from './Component/Heder/Footer';
-  import Bennar from './Banner';
-  import TechPhone from './ProductSection/TechPhone';
-  import Laptop from './ProductSection/Laptop';
-  import Login from './Component/Heder/Login';
-  import Brand from './Component/Heder/ProdcutList/Brand';
-  import { ToastContainer, toast } from 'react-toastify'
-  import 'react-toastify/dist/ReactToastify.css';
-  import Signup from './Component/Heder/Signup';
-  import View from './ProductSection/View';
-  import { DataProduct } from './ProductSection/ProductData';
-  import Cart from './ProductSection/Cart';
-  import  axios from 'axios' 
-  import Adminlogin from './AdminSide/Adminlogin';
-  import AdminHome from './AdminSide/AdminHome';     
-  import AddProduct from './AdminSide/AddProduct';
-  
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { createContext, useEffect, useState } from 'react';
+import Head2 from './Head2';
+import Footer from './Component/Heder/Footer';
+import Bennar from './Banner';
+import TechPhone from './ProductSection/TechPhone';
+import Laptop from './ProductSection/Laptop';
+import Login from './Component/Heder/Login';
+import Brand from './Component/Heder/ProdcutList/Brand';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import Signup from './Component/Heder/Signup';
+import View from './ProductSection/View';
+import { DataProduct } from './ProductSection/ProductData';
+import Cart from './ProductSection/Cart';
+import  axios from 'axios' 
+import Adminlogin from './AdminSide/Adminlogin';
+import AdminHome from './AdminSide/AdminHome';     
+import AddProduct from './AdminSide/AddProduct'; 
 import User from './AdminSide/User';
 import Allproduct from './ProductSection/Allproduct';
 import ProductWishlist from './ProductSection/ProductWishlist';
@@ -31,6 +30,9 @@ import EyeOder from './AdminSide/EyeOder';
 import Profile from './userProfile/Profile';
 import PriceCard from './Component/Heder/ProdcutList/PriceCard';
 import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
+import Otp from './Component/Heder/ProdcutList/Otp';
+import ResetPassword from './Component/Heder/Resetpassword'
+import ForgetPassword from './Component/Heder/ForgetPassword';
 
 
 
@@ -44,20 +46,18 @@ import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
           Authorization:localStorage.getItem('jwt')
         }
    })   
-   
- 
- 
-
-
-
-
-
 
   export const DataProductt = createContext();
 
 
 
   function App() {
+
+ 
+
+
+
+
     const loc=useLocation()
     const  ijdsk=loc.pathname.endsWith("/")
     const [product, setProduct] = useState(DataProduct);
@@ -101,8 +101,7 @@ import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
      await Axios.post(`api/users/${userId}/wishlists`,{productId})
      const response = await Axios.get(`api/users/${userId}/wishlists`)
 
-    //  console.log(response,"hhhhhhh");
-
+   
      if(response.status === 200){
         toast.success('Add to wishlist')
         setWishlist(response.data.data)
@@ -150,7 +149,9 @@ import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
           <Route path='/AdminLogin' element={<Adminlogin/>}/>
           <Route path='/AdminHome' element={<AdminHome/>}/>
           <Route path='/Addproduct' element={<AddProduct/>}/>
-          <Route path='/user' element={<User/>}/>
+          
+          <Route path="/user/Block" element={<User />} />     
+       
           <Route path='/allProducts' element={<Allproduct/>}/>
           <Route path='/Wishlist' element={<ProductWishlist/>}/>
           <Route path='/ProductList' element={<Productlist/>}/>
@@ -160,7 +161,9 @@ import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
           <Route path='/viewOder' element={<Oderdata/>}/>
           <Route path='/EyeOder/:id' element={<EyeOder/>}/>
           <Route path='/Profile' element={<Profile/>}/>
-         
+          <Route path='/Otp' element={<Otp/>}/>
+          <Route path='/password-reset' element={<ResetPassword/>}/>
+          <Route path='/forgotpassword/:id/:token' element={<ForgetPassword/>}/>
         </Routes>
         {
         ijdsk&&
@@ -169,6 +172,7 @@ import OfferCrad from './Component/Heder/ProdcutList/OfferCrad';
        <Video/>
        <PriceCard/>
        <OfferCrad/>
+    
         
         
         </>

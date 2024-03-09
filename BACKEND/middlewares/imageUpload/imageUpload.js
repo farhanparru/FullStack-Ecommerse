@@ -33,11 +33,11 @@ const imageUpload = (req,res,next)=>{
          return res.status(400).json({error:err.message})
       }
       try{
+         console.log("request",req.file);
          const result = await cloudinary.uploader.upload(req.file.path,{
             folder:"Ecomers-imgs"
          })
          
-         console.log(result);
         
            req.body.image = result.secure_url
 

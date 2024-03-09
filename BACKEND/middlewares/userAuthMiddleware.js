@@ -10,7 +10,7 @@ module.exports = function verifyToken (req,res, next) {
     }
     //If a token is found, it attempts to verify the token using the jwt.verify() method. This method takes three arguments: the token, a secret key, and a callback function. The secret key is retrieved from the environment variable ADMIN_ACCES_TOKEN_SECRET.
     jwt.verify(token, process.env.USER_ACCES_TOKEN_SECRET,(err, decode) => {
-                    console.log(err,"hau");
+                    
         if(err) {    
            
             return res.status(401).json({error: "Unathorazed😠"})

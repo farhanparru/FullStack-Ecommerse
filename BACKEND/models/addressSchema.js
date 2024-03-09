@@ -39,6 +39,9 @@ const addressSchema = mongoose.Schema({
         type:String,
         require:true,
     },
+   
+    image:String,
+
 
     default:{
         type:Boolean,

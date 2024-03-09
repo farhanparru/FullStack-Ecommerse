@@ -39,13 +39,7 @@ const EyeOder = () => {
         },[id])
     
         
-       
-    useEffect(()=>{
-        const CancleOrder = async()=>{
-             
-        }
-    })
-          
+    
 
 
 
@@ -111,12 +105,12 @@ const EyeOder = () => {
                     
                     <div class="w-full border-t border-gray-200 px-9 flex flex-col lg:flex-row items-center justify-between ">
                         <div class="flex flex-col sm:flex-row items-center max-lg:border-b border-gray-180">
-                            <button class="flex outline-0 py-6 sm:pr-6 sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-indigo-600">
+                            {/* <button class="flex outline-0 py-6 sm:pr-6 sm:border-r border-gray-200 whitespace-nowrap gap-2 items-center justify-center font-semibold group text-lg text-black bg-white transition-all duration-500 hover:text-indigo-600">
                             <img 
                             style={{ width: "20%", height: "20%", transition: "transform 0.2s" }}
                             src={cancle}></img>
                                 Cancel Order
-                            </button>
+                            </button> */}
                             <p class="font-medium text-lg text-gray-900 pl-6 py-3 max-lg:text-center">Paid using Credit Card <span class="text-gray-500">ending with 8822</span></p>
                         </div>
                         <p class="font-semibold text-lg text-black py-6">Total Price: <span class="text-indigo-600">₹{totalamount}</span></p>
