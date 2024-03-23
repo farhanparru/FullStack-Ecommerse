@@ -52,9 +52,7 @@ const handleAddToCart = async(event)=>{
   
    try{
      const response = await Axios.post(`http://localhost:3000/api/users/${userId}/cart`,{productId:id});
-    //  console.log(response,"hhh");
-
-    //  console.log(response,"oooooo");
+ 
 
      if(response && response.data && response.data.status === "success"){
            toast.success('Product successfully added to the  cart ')
@@ -82,175 +80,137 @@ const handleAddToWishlist = (e) => {
 
   return (
     <div>
-    <img 
-  src='https://img.freepik.com/free-vector/ecommerce-web-page-concept-illustration_114360-8204.jpg' 
-  style={{
-    
-    left: 10,
-    width: "70cm"
-  }}
-/>
-      <div class="relative z-10" role="dialog" aria-modal="true">
- 
-  <div class="fixed inset-0 hidden bg-gray-500 bg-opacity-75 transition-opacity md:block"></div>
+    <section class="py-12 sm:py-16"> 
+  <div class="container mx-auto px-4">
+   
 
-  <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-    <div class="flex min-h-full items-stretch justify-center text-center md:items-center md:px-2 lg:px-4">
-    
-      <div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">
-        <div class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-          <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">
-            <span class="sr-only">Close</span>
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" onClick={() => navigate('/laptop')}>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
-            <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                 
-              <img   variant='top' src={product.image} alt="Two each of gray, white, and black shirts arranged on table." class="object-cover object-center"/>
-                
+    <div class="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16">
+      <div class="lg:col-span-3 lg:row-end-1">
+        <div class="lg:flex lg:items-start">
+          <div class="lg:order-2 lg:ml-5">
+            <div class="max-w-xl overflow-hidden rounded-lg">
+              <img class="h-full w-full max-w-full object-cover"  src={product.image}alt="" />
             </div>
-            <div class="sm:col-span-8 lg:col-span-7">
-              <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">Price:₹{product.price}</h2>
+          </div>
 
-              <section aria-labelledby="information-heading" class="mt-2">
-                <h3 id="information-heading" class="sr-only">Product information</h3>
-
-                <del class="text-2xl text-gray-900">OldPrice:₹{product.OldPrice}</del>
-
-              
-                <div class="mt-6">
-                  <h4 class="sr-only">Reviews</h4>
-                  <div class="flex items-center">
-                    <div class="flex items-center">
-                     
-                      <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                      </svg>
-                      <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                      </svg>
-                      <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                      </svg>
-                      <svg class="text-gray-900 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                      </svg>
-                      <svg class="text-gray-200 h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401z" clip-rule="evenodd" />
-                      </svg>
-                    </div>
-                    <p class="sr-only">3.9 out of 5 stars</p>
-                    <a href="#" class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">117 reviews</a>
-                  </div>
-                </div>
-              </section>
-
-              <section aria-labelledby="options-heading" class="mt-10">
-                <h3 id="options-heading" class="sr-only">Product options</h3>
-
-                <form>
-                  
-                  <div>
-                    <h4 class="text-sm font-medium text-gray-900">Color</h4>
-
-                    <fieldset class="mt-4">
-                      <legend class="sr-only">Choose a color</legend>
-                      <span class="flex items-center space-x-3">
-                       
-                        <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
-                          <input type="radio" name="color-choice" value="White" class="sr-only" aria-labelledby="color-choice-0-label"/>
-                          <span id="color-choice-0-label" class="sr-only">White</span>
-                          <span aria-hidden="true" class="h-8 w-8 bg-white rounded-full border border-black border-opacity-10"></span>
-                        </label>
-                        
-                        <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-400">
-                          <input type="radio" name="color-choice" value="Gray" class="sr-only" aria-labelledby="color-choice-1-label"/>
-                          <span id="color-choice-1-label" class="sr-only">Gray</span>
-                          <span aria-hidden="true" class="h-8 w-8 bg-gray-200 rounded-full border border-black border-opacity-10"></span>
-                        </label>
-                        
-                        <label class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-900">
-                          <input type="radio" name="color-choice" value="Black" class="sr-only" aria-labelledby="color-choice-2-label"/>
-                          <span id="color-choice-2-label" class="sr-only">Black</span>
-                          <span aria-hidden="true" class="h-8 w-8 bg-gray-900 rounded-full border border-black border-opacity-10"></span>
-                        </label>
-                      </span>
-                    </fieldset>
-                  </div>
-
-                  <div class="mt-10">
-                    <div class="flex items-center justify-between">
-                      <h4 class="text-sm font-medium text-gray-900">Product Detials</h4>
-                     
-                    </div>
-
-                    <fieldset class="mt-4">
-  <legend class="sr-only">Product Details</legend>
-  <div>
-    <h4 class="text-sm font-medium text-gray-900">Model Name</h4>
-    <p>{product.ProductName}</p>
-  </div>
-  <div class="mt-1">
-    <h4 class="text-sm font-medium text-gray-900">Processor</h4>
-    <p>{product.ProcessorName}</p>
-  </div>
-  <div class="mt-1">
-    <h4 class="text-sm font-medium text-gray-900">RAM</h4>
-    <p>{product.RAM} GB</p>
-  </div>
-  <div class="mt-1">
-    <h4 class="text-sm font-medium text-gray-900">Storage</h4>
-    <p>{product.SSDCapacity} SSD</p>
-  </div>
-  <div class="mt-1px">
-    <h4 class="text-sm font-medium text-gray-900">Operating System</h4>
-    <p>{product.OperatingSystem}</p>
-  </div>
-  <div class="mt-1px">
-    <h4 class="text-sm font-medium text-gray-900">Screen Size</h4>
-    <p>{product.ScreenSize}</p>
-  </div>
-  <div class="mt-1px">
-    <h4 class="text-sm font-medium text-gray-900">Battery Backup</h4>
-    <p>Up to {product.BatteryBackup} Hours</p>
-  </div>
-</fieldset>
-
-                  </div>
-
-                  <button type="submit" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" onClick={handleAddToCart} >
-                  <i class="fas fa-shopping-cart mr-2"></i>
-                  Add to Cart</button>
-
-                  <button type="submit" class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                   onClick={()=> 
-                   navigate(`/Cart/${userId}`)}>
-
-                  <i class="fas fa-shopping-cart mr-2"></i>
-                  Go to Cart</button>
-
-                  <button
-        type="submit"
-        class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-gray-200 px-8 py-3 text-base font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-        onClick={handleAddToWishlist}
-      >
-        <i class="far fa-heart mr-2"></i>
-        Add to Wishlist
-      </button>
-
-                 
-                </form>
-              </section>
+          <div class="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
+            <div class="flex flex-row items-start lg:flex-col">
+              <button type="button" class="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-gray-900 text-center">
+                <img class="h-full w-full object-cover"  src={product.image} alt="" />
+              </button>
+              <button type="button" class="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center">
+                <img class="h-full w-full object-cover"  src={product.image} alt="" />
+              </button>
+              <button type="button" class="flex-0 aspect-square mb-3 h-20 overflow-hidden rounded-lg border-2 border-transparent text-center">
+                <img class="h-full w-full object-cover"  src={product.image} alt="" />
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      <div class="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+        <h1 class="sm: text-2xl font-bold text-gray-900 sm:text-3xl">{product.title}</h1>
+
+        <div class="mt-5 flex items-center">
+          <div class="flex items-center">
+            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
+            </svg>
+            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
+            </svg>
+            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
+            </svg>
+            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
+            </svg>
+            <svg class="block h-4 w-4 align-middle text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" class=""></path>
+            </svg>
+          </div>
+          <p class="ml-2 text-sm font-medium text-gray-500">1,209 Reviews</p>
+        </div>
+        <h2 className="mt-8 text-base text-gray-900">Product Details</h2>
+              <div className="mt-3">
+                <p>Processor: {product.ProcessorName}</p>
+                <p>RAM: {product.RAM}</p>
+                <p>SSD Capacity: {product.SSDCapacity}</p>
+                <p>Operating System: {product.OperatingSystem}</p>
+                <p>Screen Size: {product.ScreenSize}</p>
+                <p>Battery Backup: {product.BatteryBackup}</p>
+              </div>
+
+
+        <div class="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
+          <div class="flex items-end">
+            <h1 class="text-3xl font-bold">₹{product.price}</h1>
+            <p className="text-gray-500 line-through">₹{product.OldPrice}</p>
+  
+          </div>
+
+          <div className="mt-4 flex justify-between">
+  <button 
+    className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-900 text-white px-6 py-3 text-base font-bold transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+    onClick={handleAddToCart}
+  >
+     <i className="far fa-heart mr-2"></i>
+    Add to Cart
+  </button>
+
+  <div className="flex items-center">
+    <div className="w-px bg-gray-300 h-6"></div> 
+  </div>
+
+  <button
+    type="submit"
+    className="inline-flex items-center justify-center rounded-md border border-transparent bg-gray-200 text-gray-700 px-6 py-3 text-base font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+    onClick={handleAddToWishlist}
+  >
+    <i className="far fa-heart mr-2"></i>
+    Add to Wishlist
+  </button>
+</div>
+
+
+
+
+        <ul class="mt-8 space-y-2">
+          <li class="flex items-center text-left text-sm font-medium text-gray-600">
+            <svg class="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" class=""></path>
+            </svg>
+            Free shipping worldwide
+          </li>
+
+          <li class="flex items-center text-left text-sm font-medium text-gray-600">
+            <svg class="mr-2 block h-5 w-5 align-middle text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" class=""></path>
+            </svg>
+            Cancel Anytime
+          </li>
+        </ul>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="border-b border-gray-300">
+          <nav class="flex gap-4">
+            <a href="#" title="" class="border-b-2 border-gray-900 py-4 text-sm font-medium text-gray-900 hover:border-gray-400 hover:text-gray-800"> Description </a>
+
+            <a href="#" title="" class="inline-flex items-center border-b-2 border-transparent py-4 text-sm font-medium text-gray-600">
+              Reviews
+              <span class="ml-2 block rounded-full bg-gray-500 px-2 py-px text-xs font-bold text-gray-100"> 1,209 </span>
+            </a>
+          </nav>
+        </div>
+
+      </div>
     </div>
   </div>
   </div>
+</section>
+
     </div>
   )
 }

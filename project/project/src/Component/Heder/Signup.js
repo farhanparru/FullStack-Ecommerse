@@ -8,14 +8,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Signup = () => {
-
-
-
-
-
-
-  
+const Signup = () => { 
   const Navigate = useNavigate()
   const userNameRef = useRef(null)
   const emailRef = useRef(null)
@@ -98,7 +91,7 @@ const Signup = () => {
     }
 
     // confirm password validation
-    if (Password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setErorr('Passwords do not match');
       toast.error('Passwords do not match'); // Show error notification
       return;

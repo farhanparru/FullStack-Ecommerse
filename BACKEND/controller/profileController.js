@@ -13,7 +13,6 @@ const cerateAddress = async (req, res) => {
 
       
         const decoded = jwt.verify(token, process.env.USER_ACCES_TOKEN_SECRET)
-        console.log(decoded,"hh");
         const userId = decoded.userId
 
 

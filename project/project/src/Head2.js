@@ -12,8 +12,9 @@ import { Axios } from './App';
 import { toast } from 'react-toastify';
 import cart from '../src/assets/Animation  cart.gif'
 import './Head.css'
-import Avtar from '../src/assets/avtar admin.png'
 import Brand from '../src/assets/logo brand.png'
+import profile from './assets/userprofilen.webp'
+import axios from 'axios';
 
 
 function Head2() {
@@ -24,6 +25,25 @@ function Head2() {
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
+
+  const [userData,setUserdata]= useState({})
+ 
+
+  const getUser = async ()=>{
+    try{
+
+      const response =  await axios.get('http://localhost:3000/Login/sucess',{withCredentials:true});
+         setUserdata(response.data.user)
+        //  console.log(response.data,"hhh");
+    }catch(error){
+        console.log(error,"error");
+    }
+  }
+
+ useEffect(()=>{
+    getUser()
+ })
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,94 +77,59 @@ function Head2() {
     Navigate("/Login");
   };
 
-  const handleLogin2 = () => {
-    Navigate("/AdminLogin");
-  };
-
+ 
   return (
     <div className="relative">
-      <Navbar expand="lg" className='bg-cyan-800 px-1 text-white font-thin'>
-        <Container>
+      <Navbar expand="lg" className='bg-cyan-800 text-white font-thin' style={{ height: '80px', width: '100%', position: 'fixed', top: '2', left: '2', zIndex: '1000' }}>
+        <Container className="flex justify-between items-center">
           <Navbar.Brand href="#" className="brand-name">
             <img src={Brand} alt="Logo" style={{ width: '90px', height: 'auto', animation: 'logoAnimation 2s infinite alternate', marginLeft:"-282.5%" }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" className='' />
-          <Navbar.Collapse className='w-full flex flex-col gap-2 justify-between items-center md:flex-row '>
-            <div className='flex justify-center md:items-center flex-col md:gap-4 items-start w-full px-4 gap-3 md:flex-row'>
-              <Link to="/"><button className='hover:text-yellow-500 text-opacity-50 border px-3 rounded-lg text-lg text-white'>Home</button></Link>
-              <Link to="/laptop"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>Laptops</button></Link>
-              <Link to="/Phone"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>Smartphone</button></Link>
-              <Link to="/allProducts"><button className='hover:text-yellow-500 text-opacity-50 border px-2 rounded-lg text-lg text-white'>All Products</button></Link>
+          <Navbar.Collapse className='w-full flex flex-col md:flex-row gap-2 md:gap-4 md:justify-end'>
+            {/* Navbar Links */}
+            <div className='flex justify-center md:items-center flex-col md:flex-row'>
+              <Link to="/"><button className='nav-link' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Home</button></Link>
+              <Link to="/laptop"><button className='nav-link' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Laptops</button></Link>
+              <Link to="/Phone"><button className='nav-link' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>Smartphone</button></Link>
+              <Link to="/allProducts"><button className='nav-link' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }}>All Products</button></Link>
             </div>
 
-            <div className='flex justify-between w-full md:w-auto items-center p-4 gap-4' style={{gap:"5.5rem!important"}}>
-              {isLoggedIn ? (
-                <>
-                  <div className="flex items-center gap-1">
-                    <img onClick={()=> Navigate(`/Cart/${userId}`)} src={cart} title='Cart'></img>
-                    <Link to="/Wishlist" className="ml-4">
-                      <FaRegHeart className="text-3xl cursor-pointer rounded-full text-red-500" title="Wi shlist" />
-                    </Link>
-                  </div>
-                  <div className="avatar gap-2">
-                    <div className="w-10 mt-0 md:mt-8 mask mask-squircle">
-                    <img onClick={handleLogin2} src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?w=740&t=st=1702202454~exp=1702203054~hmac=9912f587eff164dd6dbaf25149db650afc3800927e1f67b62555f6a6d929f2f4" title='Admin' />
-                    </div>
-                  </div>
-                  <NavLink onClick={handleLogout} className='text-white text-2xl'>
-                    <FaSignOutAlt title='Logout' />
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <NavLink onClick={HandleLogin}><PiSignIn className='text-white text-2xl' title='Login' /></NavLink>
-                </>
-              )}
-            </div>
-          
-
-            <form className="absolute top-full left-0 max-w-md mx-auto w-full md:w-auto relative">
-        <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
-        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-          <div className="flex-shrink-0 p-3">
-            <BiSearch className="w-6 h-6 text-gray-500 dark:text-gray-400" />
-          </div>
-
-
-          <input
-            type="search"
-            id="searchInput"
-            className="flex-grow p-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none dark:text-white dark:placeholder-gray-400"
-            placeholder="Search items..."
-            aria-label='Search'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} />
-     
-        </div>
-      </form>
-      <div className="ml-auto">
-    <Link to="/Profile">
-        <img 
-            src={Avtar} 
-            alt="Profile" 
-            title="Profile" 
-            style={{ 
-                width: '88px', 
-                height: '50px', 
-                borderRadius: '25px' // half of the height for a rounded shape
-            }} 
-        />
-    </Link>
+        
+<div>
+<div className='flex justify-end items-center p-4 gap-4'> {/* Updated: justify-end */}
+  {isLoggedIn ? (
+    <div className="flex items-center gap-1">
+      <img onClick={()=> Navigate(`/Cart/${userId}`)} src={cart} title='Cart' style={{width:"95px",height:"95px"}}></img>
+      <Link to="/Wishlist" className="ml-4">
+        <FaRegHeart className="text-3xl cursor-pointer rounded-full text-red-500" title="Wi shlist" />
+      </Link>
+    </div>
+    ) : null}
+      
+    {isLoggedIn ? (
+      <NavLink onClick={handleLogout} className='user-action-btn' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: '1px solid white', borderRadius: '5px', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+        <FaSignOutAlt style={{ marginRight: '5px' }} /> Logout
+      </NavLink>
+    ) : (
+      <NavLink onClick={HandleLogin} className='user-action-btn' style={{ padding: '10px 20px', fontSize: '16px', color: 'white', backgroundColor: 'transparent', border: '1px solid white', borderRadius: '5px', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+        <PiSignIn style={{ marginRight: '5px' }} /> Login
+      </NavLink>
+    )}
+  </div>
 </div>
-
-   
-
+    
+ 
 
           </Navbar.Collapse>
+          <div style={{ position: 'absolute', top: '50%', right: '20px', transform: 'translateY(-50%)' }}>
+  <Link to="/Profile"><img src={profile} style={{ width: '50px', height: '50px', borderRadius: '50%' }} /></Link>
+</div>
+
         </Container>
       </Navbar>
 
-  
+      {/* Search Results */}
       {searchTerm && (
         <div className='search-results absolute flex flex-wrap top-full left-0 justify-center items-center gap-3 backdrop-blur-xl border border-gray-300 rounded-b-md p-2 z-[999] w-full h-fit   oveshadow-md'>
           {searchResults.map((product) => (

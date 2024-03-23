@@ -1,14 +1,18 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const crypto = require ('crypto')
+
 
 const userSchema = new mongoose.Schema({
   email:{
     type:String,
-    required:true,
+    required:true,     
   } ,
   username: String,
-  password: String,
+  password: String,     
+  googleId:String,
+  displayName:String,       
+  image:String,
+ 
  
 
   isActive: {
@@ -16,14 +20,7 @@ const userSchema = new mongoose.Schema({
     default: true, // or false, depending on your preference
   },
 
-  tokens:[
-    {
-      token:{
-        type:String,
-        required:true,
-      }
-    }
-  ],
+
 
   verifytoken:{
     type:String,
@@ -44,7 +41,7 @@ const userSchema = new mongoose.Schema({
   wishlist: [{ type: mongoose.Schema.ObjectId, ref: "Product" }],
   orders: [{ type: mongoose.Schema.ObjectId, ref: "Orders" }],
  
-});
+},{timestamps:true});
 
 
 
@@ -62,19 +59,5 @@ userSchema.pre("save", async function (next) {
 });
 
 
-//generate password reset Token
-userSchema.methods.getResetPasswordToken = function(){
-  //generate Token
-  const resetToken = crypto.randomBytes(20).toString('hex');
-
-  // hash and set  to resetPassword Token
-   this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
-
-   //set Token expire Time
-
-   this.resetPasswordExpire = Date.now() + 30 * 60 * 1000
-
-   return resetToken
-}
 
 module.exports = mongoose.model("User", userSchema);

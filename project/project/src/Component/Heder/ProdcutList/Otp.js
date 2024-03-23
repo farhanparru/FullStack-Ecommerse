@@ -1,69 +1,135 @@
-import React, { useEffect, useState } from 'react'
-import { Axios } from '../../../App'
-import axios from 'axios';
+import { useRef, useState } from "react";
+import "../ProdcutList/OtpInput.css"; 
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios from "axios"; 
 
-const Otp = () => {
-  const [otp, setOtp] = useState('');
+const OtpInput = () => {
 
-  const handleVerifyi = async () => {
+  const [otp,setOtp] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
+
+  const location = useLocation();
   
-    try {
-      const response = await axios.post('http://localhost:3000/api/users/verifyiOtp', { otp });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  const Navigate = useNavigate();
+
+  const LoginUser = async (e) => {
+     e.preventDefault();
+     if(otp === ""){
+      toast.error("Enter Your OTP");
+     } else if(!/[^a-zA-Z]/.test(otp)){
+       toast.error("Enter Valid OTP");
+     } else if(otp.length < 4){
+       toast.error("OTP length minimum 4 digits");
+     } else {
+      try {
+        const response = await axios.post("http://localhost:3000/api/users/userVerify", {
+          email: location.state,
+          otp: otp
+        });
+       
+        const token = response.data.data;
+        const userId = response.data.userId;
+        const userEmail = response.data.Email;
+       
+        localStorage.setItem("jwt", token);
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("email", userEmail);
+       
+        Navigate("/"); 
+      } catch (error) {
+     
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("An error occurred while processing your request.");
+        }
+      }
+     }
   }
+
+  const fieldsRef = useRef();
+  const [state, setState] = useState({
+    code1: "",
+    code2: "",
+    code3: "",
+    code4: "",
+  });
+
+  const inputFocus = (e) => {
+    const elements = fieldsRef.current.children;
+    const dataIndex = +e.target.getAttribute("data-index");
+    if (e.key === "Delete" || e.key === "Backspace") {
+      const next = dataIndex - 1;
+      if (next > -1) {
+        elements[next].focus();
+      }
+    } else {
+      const next = dataIndex + 1;
+      if (
+        next < elements.length &&
+        e.target.value !== " " &&
+        e.target.value !== "" &&
+        e.key.length === 1
+      ) {
+        elements[next].focus();
+      }
+    }
+  };
+
+  const handleChange = (e, codeNumber) => {
+    const value = e.target.value;
+    setState({ ...state, [codeNumber]: value });
+    
+    const newOtp = { ...state, [codeNumber]: value };
+    const otpValue = Object.values(newOtp).join('').slice(0, 4); 
+    setOtp(otpValue);
+  };
+  
+  const email = `${location.state}`;
+  const atIndex = email.indexOf("@");
+  const hiddenEmail = email.substring(0, atIndex - 10) + "*".repeat(10) + email.substring(atIndex);
 
 
   return (
-    <div>
-   <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
-  <div class="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
-    <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
-      <div class="flex flex-col items-center justify-center text-center space-y-2">
-        <div class="font-semibold text-3xl">
-          <p>OTP Verification</p>
-        </div>
-        <div class="flex flex-row text-sm font-medium text-gray-400">
-          <span class="font-bold">We have sent a code to your email ba**@dipainhouse.com</span>
-        </div>
-      </div>
+    <div className="container">
+   
+      <div
+        className="row justify-content-center align-items-center"
+        style={{ minHeight: "100vh" }}
+      >
+        <div className="col-md-6">
+       
+          <div className="card otp-card">
+          { !emailSent && 
+            <span>Email has been sent for OTP: {hiddenEmail}</span>
 
-      <div>
-        <form action="" method="post">
-          <div class="flex flex-col space-y-16">
-            <div class="flex justify-center">
-              
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-              <input class="border h-16 w-16 text-center form-control rounded" type="text" id="otpInput" maxLength="6" />
-            </div>
 
-            <div class="flex flex-col space-y-5">
-              <div>
-                <button class="flex items-center justify-center w-full border rounded-x1 outline-none py-4 bg-blue-700 border-none text-white text-sm shadow-sm" onClick={handleVerifyi}>
-                  Verify Account
-                </button>
+            }
+            <div className="card-body otp-content">
+              <h5 className="card-title otp-label">Verification code</h5>
+              <div ref={fieldsRef} className="otp-inputs">
+                {[1, 2, 3, 4].map((index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    data-index={index - 1}
+                    placeholder="0"
+                    value={state[`code${index}`]}
+                    maxLength={1}
+                    className="form-control otp-field"
+                    onChange={(e) => handleChange(e, `code${index}`)}
+                    onKeyUp={inputFocus}
+                  />
+                ))}
               </div>
-
-              <div class="flex items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                <p>Didn't receive code?</p>
-                <a class="flex items-center text-blue-600" href="http://" target="_blank" rel="noopener noreferrer">Resend</a>
-              </div>
+              <button className="btn btn-primary btn-block mt-3" onClick={LoginUser}>Verify</button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  );
+};
 
-    </div>
-  )
-}
-
-export default Otp
+export default OtpInput;

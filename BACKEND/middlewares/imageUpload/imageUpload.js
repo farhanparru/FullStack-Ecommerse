@@ -23,8 +23,6 @@ cloudinary.config({
    api_secret:process.env.CLOUDINARY_SECRET_KEY
 })
 
-
-
 const imageUpload = (req,res,next)=>{
  
    upload.single("image")(req,res,async(err)=>{
@@ -33,7 +31,7 @@ const imageUpload = (req,res,next)=>{
          return res.status(400).json({error:err.message})
       }
       try{
-         console.log("request",req.file);
+         // console.log("request",req.path);
          const result = await cloudinary.uploader.upload(req.file.path,{
             folder:"Ecomers-imgs"
          })
