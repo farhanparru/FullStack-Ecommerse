@@ -29,20 +29,20 @@ function Head2() {
   const [userData,setUserdata]= useState({})
  
 
-  const getUser = async ()=>{
-    try{
+  // const getUser = async ()=>{
+  //   try{
 
-      const response =  await axios.get('http://localhost:3000/Login/sucess',{withCredentials:true});
-         setUserdata(response.data.user)
-        //  console.log(response.data,"hhh");
-    }catch(error){
-        console.log(error,"error");
-    }
-  }
+  //     const response =  await axios.get('http://localhost:3000/Login/sucess',{withCredentials:true});
+  //        setUserdata(response.data.user)
+  //       //  console.log(response.data,"hhh");
+  //   }catch(error){
+  //       console.log(error,"error");
+  //   }
+  // }
 
- useEffect(()=>{
-    getUser()
- })
+//  useEffect(()=>{
+//     getUser()
+//  })
 
 
   useEffect(() => {
@@ -80,7 +80,7 @@ function Head2() {
  
   return (
     <div className="relative">
-      <Navbar expand="lg" className='bg-cyan-800 text-white font-thin' style={{ height: '80px', width: '100%', position: 'fixed', top: '2', left: '2', zIndex: '1000' }}>
+      <Navbar expand="lg" className='bg-cyan-800 text-white font-thin' style={{ height: '57px', width: '100%', position: 'fixed', top: '2', left: '2', zIndex: '1000' }}>
         <Container className="flex justify-between items-center">
           <Navbar.Brand href="#" className="brand-name">
             <img src={Brand} alt="Logo" style={{ width: '90px', height: 'auto', animation: 'logoAnimation 2s infinite alternate', marginLeft:"-282.5%" }} />

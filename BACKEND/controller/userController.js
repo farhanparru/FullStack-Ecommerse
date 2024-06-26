@@ -27,32 +27,24 @@ module.exports = {
   userSignup: async (req, res) => {
     const { value, error } = joiUserSchema.validate(req.body);
     const { email, username, password, confirm } = req.body;
-
-    const checkUserPresent = await User.findOne({ email });
-    if (checkUserPresent) {
-      return res.status(401).json({
-        success: false,
-        message: "User with this email already exists",
-      });
-    }
-
+  
     if (error) {
       return res.status(400).json({
         status: "Error",
         message: "Invalid user input ☹️. Please check your data. 🙂",
       });
     }
-
+  
     try {
       // Check if User already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.status(400).json({
           success: false,
-          message: "User already exists",
+          message: "User with this email already exists",
         });
       }
-
+  
       // Check if password and confirm password match
       if (password !== confirm) {
         return res.status(400).json({
@@ -60,15 +52,14 @@ module.exports = {
           message: "Password and confirm password do not match",
         });
       }
-
+  
       // Create new User
       const newUser = await User.create({
-        email: email,
-        username: username,
-        password: password,
-        confirm: confirm,
+        email,
+        username,
+        password,
       });
-
+  
       return res.status(200).json({
         status: "success",
         message: "User registration successful 😊",
@@ -81,6 +72,8 @@ module.exports = {
       });
     }
   },
+  
+  
 
   //->user Login Jwt Web Token
   userLogin: async (req, res) => {
@@ -289,9 +282,9 @@ if (otpverification.createdAt < new Date(Date.now() - 300000)) {
         { verifytoken: token },
         { new: true }
       );
-
-      if (setUserToken) {
-        const mailOptions = {
+    
+      if (setUserToken) {   
+        const mailOptions = {             
           from: "shaminmuhammad116@gmail.com",
           to: email,
           subject: "Sending Email For password Reset",

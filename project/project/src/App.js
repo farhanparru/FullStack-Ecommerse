@@ -76,7 +76,7 @@ function App() {
           setWishStatus(true);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 

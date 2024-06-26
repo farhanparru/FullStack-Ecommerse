@@ -20,7 +20,9 @@ const clientsecret = process.env.GOOGLE_CLIENT_SECRET;
 mongoose.connect("mongodb://127.0.0.1:27017/E-Commerse", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+}).then(()=>{
+  console.log('MongoDb conncted');
+})
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -60,7 +62,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
      
-      try {
+      try {    
         let user = await userDatabase.findOne({ googleId: profile.id });
 
         if (!user) {
@@ -70,7 +72,7 @@ passport.use(
             displayName:profile.displayName,   
             email: profile.emails[0].value,
             image: profile.photos[0].value,
-          });
+          });    
 
           await user.save();
         }
@@ -93,10 +95,7 @@ passport.deserializeUser((user, done) => {
 });
 
 // intial google oAuth Login
-app.get(
-  "/auth/google",        
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
+app.get("/auth/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 app.get(
   "/auth/google/callback",
@@ -109,6 +108,7 @@ app.get(
  
        
     if(req.user){
+      
       
       res.status(200).json({message:"user Login",user:req.user})
     }else{
